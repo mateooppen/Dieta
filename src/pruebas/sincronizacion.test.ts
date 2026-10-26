@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { tokenVigente } from '../datos/google.ts'
+import { mensajeErrorGoogle, tokenVigente } from '../datos/google.ts'
 import { dietaAlAbrir } from '../datos/sincronizacion.ts'
 import { crearDietaInicial } from '../logica/dieta.ts'
 import { fusionarAjustesAlImportar, nombreDeRespaldo, textoDeRespaldo } from '../logica/respaldo.ts'
@@ -50,5 +50,16 @@ describe('respaldo', () => {
     const importada = crearDietaInicial()
     importada.ajustes = { tema: 'claro', claveIA: '' }
     expect(fusionarAjustesAlImportar(importada, actual).ajustes).toEqual({ tema: 'oscuro', claveIA: 'sk-ant-mia' })
+  })
+})
+
+describe('mensajeErrorGoogle', () => {
+  it('explica la ventana cerrada y el permiso de Drive sin marcar', () => {
+    expect(mensajeErrorGoogle('popup_closed')).toContain('Se cerró la ventana')
+    expect(mensajeErrorGoogle('sin_permiso_drive')).toContain('permiso de Drive')
+  })
+  it('no deja el mensaje vacío ante un problema desconocido', () => {
+    expect(mensajeErrorGoogle('raro')).toContain('raro')
+    expect(mensajeErrorGoogle(undefined)).toBe('No se pudo entrar con Google.')
   })
 })

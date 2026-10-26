@@ -70,12 +70,34 @@ interface GoogleGlobal {
         error_callback?: (e: { type?: string; message?: string }) => void
       }): ClienteToken
       revoke(token: string, hecho?: () => void): void
+      hasGrantedAllScopes?(respuesta: RespuestaToken, ...alcances: string[]): boolean
     }
   }
 }
 
 function google(): GoogleGlobal | undefined {
   return (globalThis as { google?: GoogleGlobal }).google
+}
+
+/** True si la librería de Google ya está lista, así el toque abre la ventana sin demora. */
+export function googleListo(): boolean {
+  return Boolean(google()?.accounts?.oauth2)
+}
+
+/** Traduce los problemas que informa Google a una frase clara. Función pura para poder probarla. */
+export function mensajeErrorGoogle(tipo: string | undefined): string {
+  switch (tipo) {
+    case 'popup_closed':
+      return 'Se cerró la ventana de Google antes de terminar. Tocá "Entrar con Google" de nuevo.'
+    case 'popup_failed_to_open':
+      return 'El teléfono no dejó abrir la ventana de Google. Revisá que el navegador permita ventanas emergentes y probá de nuevo.'
+    case 'access_denied':
+      return 'No diste permiso a la app. Sin ese permiso los datos quedan solo en este teléfono.'
+    case 'sin_permiso_drive':
+      return 'Entraste, pero sin marcar el permiso de Drive. Tocá "Entrar con Google" de nuevo y marcá la casilla de Drive.'
+    default:
+      return tipo ? `No se pudo entrar con Google (${tipo}).` : 'No se pudo entrar con Google.'
+  }
 }
 
 let cargaPendiente: Promise<void> | null = null
@@ -99,24 +121,45 @@ export function cargarGoogle(): Promise<void> {
 }
 
 /**
- * Pide un token. Con `silencioso` intenta renovarlo sin molestar; si Google necesita que el usuario
- * toque algo, falla y hay que volver a llamar sin `silencioso` desde un toque del usuario.
+ * Abre la ventana de Google. Tiene que llamarse en el mismo instante del toque (sin esperas antes),
+ * porque si no el teléfono la trata como ventana no pedida y la cierra.
  */
-export async function pedirToken(silencioso: boolean): Promise<TokenGuardado> {
-  await cargarGoogle()
-  const g = google()
-  if (!g) throw new Error('La librería de Google no está disponible.')
+function solicitar(g: GoogleGlobal, silencioso: boolean): Promise<TokenGuardado> {
   return new Promise((resolver, rechazar) => {
     const cliente = g.accounts.oauth2.initTokenClient({
       client_id: CLIENT_ID,
       scope: ALCANCE,
       callback: (r) => {
-        if (r.access_token && r.expires_in) resolver(guardarToken(r.access_token, r.expires_in))
-        else rechazar(new Error(r.error_description || r.error || 'Google no devolvió un permiso.'))
+        if (!r.access_token || !r.expires_in) {
+          rechazar(new Error(r.error ? mensajeErrorGoogle(r.error) : 'Google no devolvió un permiso.'))
+          return
+        }
+        // Google deja desmarcar el permiso de Drive en la ventana: sin él, la app no puede guardar.
+        const verificar = g.accounts.oauth2.hasGrantedAllScopes
+        if (verificar && !verificar(r, ALCANCE)) {
+          rechazar(new Error(mensajeErrorGoogle('sin_permiso_drive')))
+          return
+        }
+        resolver(guardarToken(r.access_token, r.expires_in))
       },
-      error_callback: (e) => rechazar(new Error(e.message || e.type || 'Se canceló el ingreso con Google.')),
+      error_callback: (e) => rechazar(new Error(mensajeErrorGoogle(e.type))),
     })
     cliente.requestAccessToken({ prompt: silencioso ? '' : 'select_account' })
+  })
+}
+
+/**
+ * Pide un token. Con `silencioso` intenta renovarlo sin molestar; si Google necesita que el usuario
+ * toque algo, falla y hay que volver a llamar sin `silencioso` desde un toque del usuario.
+ */
+export function pedirToken(silencioso: boolean): Promise<TokenGuardado> {
+  const g = google()
+  // Camino normal: la librería ya está, la ventana se abre en el mismo toque.
+  if (g?.accounts?.oauth2) return solicitar(g, silencioso)
+  return cargarGoogle().then(() => {
+    const cargada = google()
+    if (!cargada) throw new Error('La librería de Google no está disponible.')
+    return solicitar(cargada, silencioso)
   })
 }
 

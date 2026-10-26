@@ -1,6 +1,7 @@
 import './Ajustes.css'
-import { useRef, useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 import { useDieta } from '../datos/almacen.ts'
+import { cargarGoogle, googleListo } from '../datos/google.ts'
 import { probarClave } from '../datos/ia.ts'
 import { sincronizador, useSincronizacion } from '../datos/sincronizacion.ts'
 import { Boton } from '../componentes/Boton.tsx'
@@ -28,11 +29,25 @@ export function Ajustes() {
   const [pendienteImportar, setPendienteImportar] = useState<{ nombre: string; texto: string } | null>(null)
   const selectorArchivo = useRef<HTMLInputElement>(null)
 
+  // La librería de Google se carga al abrir Ajustes, así el toque en "Entrar" abre la ventana al instante.
+  const [preparandoGoogle, setPreparandoGoogle] = useState(() => !googleListo())
+  useEffect(() => {
+    if (!preparandoGoogle) return
+    cargarGoogle()
+      .catch(() => {
+        // Sin internet: el botón queda disponible y el toque reintenta la carga.
+      })
+      .finally(() => setPreparandoGoogle(false))
+  }, [])
+
   const conSesion = sync.estado !== 'sin-sesion'
 
   const entrar = async () => {
     setOcupado(true)
-    setErrorCuenta(await sincronizador.entrar())
+    setErrorCuenta(null)
+    // Sin esperas antes de esta llamada: la ventana de Google tiene que abrirse dentro del toque.
+    const problema = await sincronizador.entrar()
+    setErrorCuenta(problema)
     setOcupado(false)
   }
   const salir = async () => {
@@ -111,8 +126,8 @@ export function Ajustes() {
                 Salir de la cuenta
               </Boton>
             ) : (
-              <Boton tipo="primario" deshabilitado={ocupado} alTocar={entrar}>
-                {sync.estado === 'sesion-vencida' ? 'Entrar de nuevo' : 'Entrar con Google'}
+              <Boton tipo="primario" deshabilitado={ocupado || preparandoGoogle} alTocar={entrar}>
+                {preparandoGoogle ? 'Preparando…' : ocupado ? 'Esperando a Google…' : sync.estado === 'sesion-vencida' ? 'Entrar de nuevo' : 'Entrar con Google'}
               </Boton>
             )}
           </div>
