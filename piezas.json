@@ -1,0 +1,1801 @@
+{
+  "version": "1.0",
+  "generado": "2026-10-25",
+  "estado": "propuesta - pendiente de validación por nutricionista",
+  "unidadCarbohidratos": "gramos por porción",
+  "criterios": {
+    "altaFibra": "La porción aporta aproximadamente 4 g de fibra o más",
+    "altaGrasa": "La porción aporta aproximadamente 10 g de grasa o más",
+    "traeCarbohidratos": "El principal ya incluye sus carbohidratos; no se le suma acompañamiento con carbohidratos",
+    "mealPrep": "Se puede cocinar de una vez para varios días (freezer o heladera)",
+    "plato": "Plato playo común de unos 25 cm",
+    "taza": "Taza de té común, 200 a 250 ml"
+  },
+  "momentos": [
+    {
+      "id": "desayuno",
+      "nombre": "Desayuno",
+      "abrev": "D",
+      "horaAprox": "8-9",
+      "carbMin": 30,
+      "carbMax": 40,
+      "descripcion": "Café + algo sólido"
+    },
+    {
+      "id": "almuerzo",
+      "nombre": "Almuerzo",
+      "abrev": "A",
+      "horaAprox": "14-14:30 (después del gimnasio)",
+      "carbMin": 50,
+      "carbMax": 60,
+      "descripcion": "La comida más grande del día"
+    },
+    {
+      "id": "merienda",
+      "nombre": "Merienda",
+      "abrev": "M",
+      "horaAprox": "17-18",
+      "carbMin": 20,
+      "carbMax": 30,
+      "descripcion": "Mate + algo"
+    },
+    {
+      "id": "cena",
+      "nombre": "Cena",
+      "abrev": "C",
+      "horaAprox": "21-22",
+      "carbMin": 40,
+      "carbMax": 50,
+      "descripcion": "Un poco menos que el almuerzo"
+    },
+    {
+      "id": "colacion",
+      "nombre": "Colación (opcional)",
+      "abrev": "Col",
+      "horaAprox": "cuando haga falta",
+      "carbMin": 10,
+      "carbMax": 15,
+      "descripcion": "El 'picar algo'"
+    }
+  ],
+  "tipos": [
+    {
+      "id": "principal",
+      "nombre": "Principal",
+      "descripcion": "La proteína o el plato de olla que es la base del almuerzo o la cena"
+    },
+    {
+      "id": "acompanamiento",
+      "nombre": "Acompañamiento",
+      "descripcion": "Lo que completa el plato: arroz, puré, ensaladas, verduras"
+    },
+    {
+      "id": "desayuno_merienda",
+      "nombre": "Desayuno / merienda",
+      "descripcion": "Panes, galletitas, lácteos, untables, facturas"
+    },
+    {
+      "id": "fruta",
+      "nombre": "Fruta",
+      "descripcion": "Va en desayuno, merienda, colación y como postre"
+    },
+    {
+      "id": "bebida",
+      "nombre": "Bebida",
+      "descripcion": "Casi todas en 0 g, pero visibles para que la app las muestre"
+    },
+    {
+      "id": "extra",
+      "nombre": "Extra",
+      "descripcion": "Postres y picoteo"
+    }
+  ],
+  "reglasCombinacion": {
+    "almuerzo_cena": "1 principal + 1 o 2 acompañamientos (+ postre opcional). Si el principal trae carbohidratos, los acompañamientos deben ser de 10 g o menos.",
+    "desayuno_merienda": "1 bebida + 1 o 2 piezas de desayuno/merienda o fruta.",
+    "colacion": "1 pieza de fruta, desayuno/merienda o extra dentro del rango.",
+    "validacion": "La suma de carbohidratos del plato debe caer dentro del rango del momento."
+  },
+  "notasNutricionista": {
+    "contexto": [
+      "Adulto con diabetes que calcula sus dosis de insulina por su cuenta. El sistema no propone dosis.",
+      "Rutina actual: 2 o 3 comidas por día, irregulares. Objetivo: pasar a una rutina ordenada.",
+      "Trabaja desde casa; cocina él o su pareja; poco tiempo al mediodía entre semana, más los fines de semana. Tiene horno, freezer y recipientes: el meal prep es viable.",
+      "Gimnasio 3 veces por semana alrededor de las 13, antes del almuerzo.",
+      "Bebidas habituales sin carbohidratos (agua, gaseosa sin azúcar, café con edulcorante, mate). Casi no come pan salvo en sándwiches. Le gusta el postre y picar algo.",
+      "Sin restricciones ni pautas previas. Evita pepino y aceitunas por gusto."
+    ],
+    "criterios": [
+      "Distribución diaria: 4 comidas + colación opcional, 150-195 g de carbohidratos por día. Rangos de arranque habituales para un adulto sin indicación personalizada; no calculados a partir de peso, gasto energético ni objetivos de glucemia.",
+      "Almuerzo como comida mayor por ser posterior al entrenamiento; cena algo menor por ser el momento menos activo. Criterios de diseño a confirmar.",
+      "Valores de carbohidratos: estimaciones por porción casera a partir de tablas de composición de alimentos (USDA FoodData Central y tablas argentinas ARGENFOODS/SARA) y recetas típicas. Redondeados a múltiplos de 5 cuando la preparación varía.",
+      "Porciones en medidas caseras (plato playo de 25 cm, taza de 200-250 ml, unidad, rodaja, cucharada, puñado) para que sean repetibles sin balanza.",
+      "Marcas: alta fibra >= 4 g por porción; alta grasa >= 10 g por porción. Umbrales simples para identificar comidas de absorción más lenta o prolongada.",
+      "Los principales que ya traen carbohidratos no se combinan con acompañamientos con carbohidratos."
+    ],
+    "aValidar": [
+      "Rangos de carbohidratos por momento y total diario.",
+      "Cantidad de comidas y horarios, en especial respecto del entrenamiento del mediodía.",
+      "Valores de carbohidratos de las piezas, sobre todo preparaciones variables (guiso, pastel de papa, tartas, pizza, empanadas, yogures saborizados).",
+      "Marcas de fibra y grasa y sus umbrales.",
+      "Piezas a agregar, quitar o reemplazar."
+    ]
+  },
+  "piezas": [
+    {
+      "nombre": "Milanesa de pollo o carne al horno",
+      "tipo": "principal",
+      "porcion": "1 unidad mediana",
+      "carbohidratos": 15,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "Los carbohidratos vienen del empanado. Se hacen varias y se congelan.",
+      "id": "milanesa-de-pollo-o-carne-al-horno",
+      "origen": "base"
+    },
+    {
+      "nombre": "Milanesa de merluza",
+      "tipo": "principal",
+      "porcion": "1 unidad mediana",
+      "carbohidratos": 15,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "",
+      "id": "milanesa-de-merluza",
+      "origen": "base"
+    },
+    {
+      "nombre": "Pollo al horno o a la plancha",
+      "tipo": "principal",
+      "porcion": "1 pechuga o 2 muslos",
+      "carbohidratos": 0,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "pollo-al-horno-o-a-la-plancha",
+      "origen": "base"
+    },
+    {
+      "nombre": "Carne a la plancha / bife",
+      "tipo": "principal",
+      "porcion": "1 porción del tamaño de la palma de la mano",
+      "carbohidratos": 0,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "carne-a-la-plancha-bife",
+      "origen": "base"
+    },
+    {
+      "nombre": "Carne de cerdo al horno",
+      "tipo": "principal",
+      "porcion": "1 porción del tamaño de la palma de la mano",
+      "carbohidratos": 0,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "",
+      "id": "carne-de-cerdo-al-horno",
+      "origen": "base"
+    },
+    {
+      "nombre": "Pescado al horno o a la plancha",
+      "tipo": "principal",
+      "porcion": "1 filet",
+      "carbohidratos": 0,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "pescado-al-horno-o-a-la-plancha",
+      "origen": "base"
+    },
+    {
+      "nombre": "Hamburguesa casera (sin pan)",
+      "tipo": "principal",
+      "porcion": "1 unidad",
+      "carbohidratos": 2,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "Se congelan crudas.",
+      "id": "hamburguesa-casera-sin-pan",
+      "origen": "base"
+    },
+    {
+      "nombre": "Huevos revueltos u omelette",
+      "tipo": "principal",
+      "porcion": "2 huevos",
+      "carbohidratos": 1,
+      "momentos": [
+        "desayuno",
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "Se le puede sumar jamón, queso o verduras sin cambiar la cuenta.",
+      "id": "huevos-revueltos-u-omelette",
+      "origen": "base"
+    },
+    {
+      "nombre": "Tortilla de verduras (acelga o zapallito)",
+      "tipo": "principal",
+      "porcion": "1/4 de tortilla mediana",
+      "carbohidratos": 5,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "Sin papa.",
+      "id": "tortilla-de-verduras-acelga-o-zapallito",
+      "origen": "base"
+    },
+    {
+      "nombre": "Tortilla de papa",
+      "tipo": "principal",
+      "porcion": "1/4 de tortilla mediana",
+      "carbohidratos": 20,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "",
+      "id": "tortilla-de-papa",
+      "origen": "base"
+    },
+    {
+      "nombre": "Atún en lata",
+      "tipo": "principal",
+      "porcion": "1 lata",
+      "carbohidratos": 0,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "Al natural. Si es al aceite, es alto en grasa.",
+      "id": "atun-en-lata",
+      "origen": "base"
+    },
+    {
+      "nombre": "Salsa boloñesa (sola)",
+      "tipo": "principal",
+      "porcion": "1 cucharón",
+      "carbohidratos": 6,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "Va con fideos o arroz, que se cuentan aparte como acompañamiento.",
+      "id": "salsa-bolonesa-sola",
+      "origen": "base"
+    },
+    {
+      "nombre": "Guiso de lentejas",
+      "tipo": "principal",
+      "porcion": "1 plato hondo",
+      "carbohidratos": 45,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": true,
+      "altaFibra": true,
+      "altaGrasa": false,
+      "nota": "Ya trae sus carbohidratos: no lleva acompañamiento con carbohidratos. Varía con la cantidad de papa.",
+      "id": "guiso-de-lentejas",
+      "origen": "base"
+    },
+    {
+      "nombre": "Pastel de papa",
+      "tipo": "principal",
+      "porcion": "1 cuadrado de 10 x 10 cm",
+      "carbohidratos": 35,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": true,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "Ya trae carbohidratos.",
+      "id": "pastel-de-papa",
+      "origen": "base"
+    },
+    {
+      "nombre": "Tarta de verduras (acelga, zapallito, jamón y queso)",
+      "tipo": "principal",
+      "porcion": "1 porción (1/8 de tarta grande)",
+      "carbohidratos": 20,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "La masa aporta casi todos los carbohidratos.",
+      "id": "tarta-de-verduras-acelga-zapallito-jamon-y-queso",
+      "origen": "base"
+    },
+    {
+      "nombre": "Zapallitos rellenos (carne y arroz)",
+      "tipo": "principal",
+      "porcion": "2 mitades",
+      "carbohidratos": 20,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "",
+      "id": "zapallitos-rellenos-carne-y-arroz",
+      "origen": "base"
+    },
+    {
+      "nombre": "Wok de pollo con verduras (sin arroz)",
+      "tipo": "principal",
+      "porcion": "1 plato playo",
+      "carbohidratos": 10,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": true,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "wok-de-pollo-con-verduras-sin-arroz",
+      "origen": "base"
+    },
+    {
+      "nombre": "Pollo con arroz",
+      "tipo": "principal",
+      "porcion": "1 plato playo",
+      "carbohidratos": 50,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": true,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "Ya trae carbohidratos.",
+      "id": "pollo-con-arroz",
+      "origen": "base"
+    },
+    {
+      "nombre": "Pollo con fideos",
+      "tipo": "principal",
+      "porcion": "1 plato playo",
+      "carbohidratos": 50,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": true,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "Ya trae carbohidratos.",
+      "id": "pollo-con-fideos",
+      "origen": "base"
+    },
+    {
+      "nombre": "Fideos con salsa de tomate",
+      "tipo": "principal",
+      "porcion": "1 plato playo",
+      "carbohidratos": 60,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": true,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "Ya trae carbohidratos.",
+      "id": "fideos-con-salsa-de-tomate",
+      "origen": "base"
+    },
+    {
+      "nombre": "Fideos con manteca y queso",
+      "tipo": "principal",
+      "porcion": "1 plato playo",
+      "carbohidratos": 55,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": true,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "Ya trae carbohidratos.",
+      "id": "fideos-con-manteca-y-queso",
+      "origen": "base"
+    },
+    {
+      "nombre": "Pizza casera",
+      "tipo": "principal",
+      "porcion": "2 porciones (de 8)",
+      "carbohidratos": 45,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": true,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "",
+      "id": "pizza-casera",
+      "origen": "base"
+    },
+    {
+      "nombre": "Empanadas de carne al horno",
+      "tipo": "principal",
+      "porcion": "2 unidades",
+      "carbohidratos": 40,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": true,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "Se congelan.",
+      "id": "empanadas-de-carne-al-horno",
+      "origen": "base"
+    },
+    {
+      "nombre": "Sándwich de jamón y queso",
+      "tipo": "principal",
+      "porcion": "1 unidad (2 rebanadas de pan lactal o 1 figacita)",
+      "carbohidratos": 30,
+      "momentos": [
+        "desayuno",
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": true,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "",
+      "id": "sandwich-de-jamon-y-queso",
+      "origen": "base"
+    },
+    {
+      "nombre": "Sándwich de pollo o atún con lechuga y tomate",
+      "tipo": "principal",
+      "porcion": "1 unidad",
+      "carbohidratos": 30,
+      "momentos": [
+        "desayuno",
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": true,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "sandwich-de-pollo-o-atun-con-lechuga-y-tomate",
+      "origen": "base"
+    },
+    {
+      "nombre": "Tostado de jamón y queso",
+      "tipo": "principal",
+      "porcion": "1 unidad (2 rebanadas)",
+      "carbohidratos": 28,
+      "momentos": [
+        "desayuno",
+        "merienda",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": true,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "",
+      "id": "tostado-de-jamon-y-queso",
+      "origen": "base"
+    },
+    {
+      "nombre": "Ensalada completa (hojas, tomate, huevo, pollo o atún)",
+      "tipo": "principal",
+      "porcion": "1 plato playo colmado",
+      "carbohidratos": 8,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": true,
+      "altaGrasa": false,
+      "nota": "Sin papa ni choclo; esos se suman como acompañamiento.",
+      "id": "ensalada-completa-hojas-tomate-huevo-pollo-o-atun",
+      "origen": "base"
+    },
+    {
+      "nombre": "Arroz blanco cocido",
+      "tipo": "acompanamiento",
+      "porcion": "1/2 plato playo (1 taza)",
+      "carbohidratos": 42,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "arroz-blanco-cocido",
+      "origen": "base"
+    },
+    {
+      "nombre": "Arroz integral cocido",
+      "tipo": "acompanamiento",
+      "porcion": "1/2 plato playo (1 taza)",
+      "carbohidratos": 35,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "arroz-integral-cocido",
+      "origen": "base"
+    },
+    {
+      "nombre": "Fideos cocidos solos",
+      "tipo": "acompanamiento",
+      "porcion": "1/2 plato playo",
+      "carbohidratos": 40,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "fideos-cocidos-solos",
+      "origen": "base"
+    },
+    {
+      "nombre": "Puré de papa",
+      "tipo": "acompanamiento",
+      "porcion": "1/2 plato playo (1 taza)",
+      "carbohidratos": 35,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "pure-de-papa",
+      "origen": "base"
+    },
+    {
+      "nombre": "Papa al horno",
+      "tipo": "acompanamiento",
+      "porcion": "1 papa mediana (tamaño puño)",
+      "carbohidratos": 25,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "papa-al-horno",
+      "origen": "base"
+    },
+    {
+      "nombre": "Batata al horno",
+      "tipo": "acompanamiento",
+      "porcion": "1 batata chica",
+      "carbohidratos": 25,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": true,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "batata-al-horno",
+      "origen": "base"
+    },
+    {
+      "nombre": "Papas fritas caseras",
+      "tipo": "acompanamiento",
+      "porcion": "1/2 plato playo",
+      "carbohidratos": 40,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "",
+      "id": "papas-fritas-caseras",
+      "origen": "base"
+    },
+    {
+      "nombre": "Puré de zapallo o calabaza",
+      "tipo": "acompanamiento",
+      "porcion": "1/2 plato playo",
+      "carbohidratos": 15,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "pure-de-zapallo-o-calabaza",
+      "origen": "base"
+    },
+    {
+      "nombre": "Choclo",
+      "tipo": "acompanamiento",
+      "porcion": "1 choclo mediano",
+      "carbohidratos": 20,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "choclo",
+      "origen": "base"
+    },
+    {
+      "nombre": "Lentejas cocidas (frías, en ensalada)",
+      "tipo": "acompanamiento",
+      "porcion": "1/2 taza",
+      "carbohidratos": 20,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": true,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "lentejas-cocidas-frias-en-ensalada",
+      "origen": "base"
+    },
+    {
+      "nombre": "Garbanzos cocidos",
+      "tipo": "acompanamiento",
+      "porcion": "1/2 taza",
+      "carbohidratos": 22,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": true,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "garbanzos-cocidos",
+      "origen": "base"
+    },
+    {
+      "nombre": "Ensalada rusa",
+      "tipo": "acompanamiento",
+      "porcion": "1/2 taza",
+      "carbohidratos": 18,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "",
+      "id": "ensalada-rusa",
+      "origen": "base"
+    },
+    {
+      "nombre": "Ensalada de hoja (lechuga, rúcula, tomate)",
+      "tipo": "acompanamiento",
+      "porcion": "1 plato playo",
+      "carbohidratos": 3,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "ensalada-de-hoja-lechuga-rucula-tomate",
+      "origen": "base"
+    },
+    {
+      "nombre": "Ensalada mixta (lechuga, tomate, cebolla, zanahoria)",
+      "tipo": "acompanamiento",
+      "porcion": "1/2 plato playo",
+      "carbohidratos": 5,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "ensalada-mixta-lechuga-tomate-cebolla-zanahoria",
+      "origen": "base"
+    },
+    {
+      "nombre": "Ensalada de tomate",
+      "tipo": "acompanamiento",
+      "porcion": "1 tomate mediano",
+      "carbohidratos": 4,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "ensalada-de-tomate",
+      "origen": "base"
+    },
+    {
+      "nombre": "Verduras al horno o salteadas (zapallito, berenjena, morrón, cebolla)",
+      "tipo": "acompanamiento",
+      "porcion": "1/2 plato playo",
+      "carbohidratos": 8,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": true,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "verduras-al-horno-o-salteadas-zapallito-berenjena-morron-cebolla",
+      "origen": "base"
+    },
+    {
+      "nombre": "Brócoli o coliflor al vapor",
+      "tipo": "acompanamiento",
+      "porcion": "1/2 plato playo",
+      "carbohidratos": 5,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": true,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "brocoli-o-coliflor-al-vapor",
+      "origen": "base"
+    },
+    {
+      "nombre": "Zanahoria rallada",
+      "tipo": "acompanamiento",
+      "porcion": "1/2 taza",
+      "carbohidratos": 5,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "zanahoria-rallada",
+      "origen": "base"
+    },
+    {
+      "nombre": "Remolacha cocida",
+      "tipo": "acompanamiento",
+      "porcion": "1/2 taza",
+      "carbohidratos": 8,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "remolacha-cocida",
+      "origen": "base"
+    },
+    {
+      "nombre": "Pan lactal blanco",
+      "tipo": "desayuno_merienda",
+      "porcion": "1 rebanada",
+      "carbohidratos": 13,
+      "momentos": [
+        "desayuno",
+        "merienda"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "pan-lactal-blanco",
+      "origen": "base"
+    },
+    {
+      "nombre": "Pan lactal integral",
+      "tipo": "desayuno_merienda",
+      "porcion": "1 rebanada",
+      "carbohidratos": 12,
+      "momentos": [
+        "desayuno",
+        "merienda"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "pan-lactal-integral",
+      "origen": "base"
+    },
+    {
+      "nombre": "Pan francés / mignon",
+      "tipo": "desayuno_merienda",
+      "porcion": "1 unidad chica",
+      "carbohidratos": 28,
+      "momentos": [
+        "desayuno",
+        "merienda"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "pan-frances-mignon",
+      "origen": "base"
+    },
+    {
+      "nombre": "Galletitas de agua",
+      "tipo": "desayuno_merienda",
+      "porcion": "3 unidades",
+      "carbohidratos": 15,
+      "momentos": [
+        "desayuno",
+        "merienda",
+        "colacion"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "galletitas-de-agua",
+      "origen": "base"
+    },
+    {
+      "nombre": "Galletita de arroz",
+      "tipo": "desayuno_merienda",
+      "porcion": "1 unidad grande",
+      "carbohidratos": 7,
+      "momentos": [
+        "desayuno",
+        "merienda",
+        "colacion"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "galletita-de-arroz",
+      "origen": "base"
+    },
+    {
+      "nombre": "Avena arrollada",
+      "tipo": "desayuno_merienda",
+      "porcion": "3 cucharadas soperas",
+      "carbohidratos": 18,
+      "momentos": [
+        "desayuno",
+        "merienda"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "Con yogur o leche, que se suman aparte.",
+      "id": "avena-arrollada",
+      "origen": "base"
+    },
+    {
+      "nombre": "Yogur natural o sin azúcar",
+      "tipo": "desayuno_merienda",
+      "porcion": "1 pote",
+      "carbohidratos": 8,
+      "momentos": [
+        "desayuno",
+        "merienda",
+        "colacion"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "yogur-natural-o-sin-azucar",
+      "origen": "base"
+    },
+    {
+      "nombre": "Yogur con sabor común",
+      "tipo": "desayuno_merienda",
+      "porcion": "1 pote o vaso de 200 ml",
+      "carbohidratos": 25,
+      "momentos": [
+        "desayuno",
+        "merienda",
+        "colacion"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "Revisar la etiqueta: varía mucho entre marcas.",
+      "id": "yogur-con-sabor-comun",
+      "origen": "base"
+    },
+    {
+      "nombre": "Leche descremada",
+      "tipo": "desayuno_merienda",
+      "porcion": "1 taza (200 ml)",
+      "carbohidratos": 10,
+      "momentos": [
+        "desayuno",
+        "merienda"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "Para el café con leche.",
+      "id": "leche-descremada",
+      "origen": "base"
+    },
+    {
+      "nombre": "Queso untable",
+      "tipo": "desayuno_merienda",
+      "porcion": "1 cucharada",
+      "carbohidratos": 1,
+      "momentos": [
+        "desayuno",
+        "merienda"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "queso-untable",
+      "origen": "base"
+    },
+    {
+      "nombre": "Queso fresco (port salut, cremoso)",
+      "tipo": "desayuno_merienda",
+      "porcion": "1 feta",
+      "carbohidratos": 0,
+      "momentos": [
+        "desayuno",
+        "merienda",
+        "colacion"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "queso-fresco-port-salut-cremoso",
+      "origen": "base"
+    },
+    {
+      "nombre": "Jamón cocido",
+      "tipo": "desayuno_merienda",
+      "porcion": "1 feta",
+      "carbohidratos": 0,
+      "momentos": [
+        "desayuno",
+        "merienda"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "jamon-cocido",
+      "origen": "base"
+    },
+    {
+      "nombre": "Manteca",
+      "tipo": "desayuno_merienda",
+      "porcion": "1 cucharadita",
+      "carbohidratos": 0,
+      "momentos": [
+        "desayuno",
+        "merienda"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "manteca",
+      "origen": "base"
+    },
+    {
+      "nombre": "Mermelada común",
+      "tipo": "desayuno_merienda",
+      "porcion": "1 cucharada",
+      "carbohidratos": 13,
+      "momentos": [
+        "desayuno",
+        "merienda"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "mermelada-comun",
+      "origen": "base"
+    },
+    {
+      "nombre": "Mermelada light",
+      "tipo": "desayuno_merienda",
+      "porcion": "1 cucharada",
+      "carbohidratos": 5,
+      "momentos": [
+        "desayuno",
+        "merienda"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "mermelada-light",
+      "origen": "base"
+    },
+    {
+      "nombre": "Dulce de leche",
+      "tipo": "desayuno_merienda",
+      "porcion": "1 cucharada",
+      "carbohidratos": 11,
+      "momentos": [
+        "desayuno",
+        "merienda"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "dulce-de-leche",
+      "origen": "base"
+    },
+    {
+      "nombre": "Huevo duro",
+      "tipo": "desayuno_merienda",
+      "porcion": "1 unidad",
+      "carbohidratos": 0,
+      "momentos": [
+        "desayuno",
+        "merienda",
+        "colacion"
+      ],
+      "mealPrep": true,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "huevo-duro",
+      "origen": "base"
+    },
+    {
+      "nombre": "Palta",
+      "tipo": "desayuno_merienda",
+      "porcion": "1/2 unidad",
+      "carbohidratos": 2,
+      "momentos": [
+        "desayuno",
+        "merienda"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": true,
+      "altaGrasa": true,
+      "nota": "",
+      "id": "palta",
+      "origen": "base"
+    },
+    {
+      "nombre": "Frutos secos (maní, almendras, nueces)",
+      "tipo": "desayuno_merienda",
+      "porcion": "1 puñado (lo que entra en la mano cerrada)",
+      "carbohidratos": 6,
+      "momentos": [
+        "desayuno",
+        "merienda",
+        "colacion"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "",
+      "id": "frutos-secos-mani-almendras-nueces",
+      "origen": "base"
+    },
+    {
+      "nombre": "Medialuna",
+      "tipo": "desayuno_merienda",
+      "porcion": "1 unidad",
+      "carbohidratos": 20,
+      "momentos": [
+        "desayuno",
+        "merienda"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "",
+      "id": "medialuna",
+      "origen": "base"
+    },
+    {
+      "nombre": "Bizcochuelo o budín casero",
+      "tipo": "desayuno_merienda",
+      "porcion": "1 rodaja fina",
+      "carbohidratos": 25,
+      "momentos": [
+        "desayuno",
+        "merienda"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "bizcochuelo-o-budin-casero",
+      "origen": "base"
+    },
+    {
+      "nombre": "Barrita de cereal",
+      "tipo": "desayuno_merienda",
+      "porcion": "1 unidad",
+      "carbohidratos": 15,
+      "momentos": [
+        "desayuno",
+        "merienda",
+        "colacion"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "barrita-de-cereal",
+      "origen": "base"
+    },
+    {
+      "nombre": "Manzana",
+      "tipo": "fruta",
+      "porcion": "1 mediana",
+      "carbohidratos": 15,
+      "momentos": [
+        "desayuno",
+        "merienda",
+        "colacion",
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": true,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "manzana",
+      "origen": "base"
+    },
+    {
+      "nombre": "Pera",
+      "tipo": "fruta",
+      "porcion": "1 mediana",
+      "carbohidratos": 20,
+      "momentos": [
+        "desayuno",
+        "merienda",
+        "colacion",
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": true,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "pera",
+      "origen": "base"
+    },
+    {
+      "nombre": "Naranja",
+      "tipo": "fruta",
+      "porcion": "1 mediana",
+      "carbohidratos": 15,
+      "momentos": [
+        "desayuno",
+        "merienda",
+        "colacion",
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "naranja",
+      "origen": "base"
+    },
+    {
+      "nombre": "Mandarina",
+      "tipo": "fruta",
+      "porcion": "1 mediana",
+      "carbohidratos": 10,
+      "momentos": [
+        "desayuno",
+        "merienda",
+        "colacion",
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "mandarina",
+      "origen": "base"
+    },
+    {
+      "nombre": "Banana",
+      "tipo": "fruta",
+      "porcion": "1 mediana",
+      "carbohidratos": 25,
+      "momentos": [
+        "desayuno",
+        "merienda",
+        "colacion",
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "banana",
+      "origen": "base"
+    },
+    {
+      "nombre": "Durazno",
+      "tipo": "fruta",
+      "porcion": "1 mediano",
+      "carbohidratos": 10,
+      "momentos": [
+        "desayuno",
+        "merienda",
+        "colacion",
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "durazno",
+      "origen": "base"
+    },
+    {
+      "nombre": "Frutillas",
+      "tipo": "fruta",
+      "porcion": "1 taza",
+      "carbohidratos": 10,
+      "momentos": [
+        "desayuno",
+        "merienda",
+        "colacion",
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "frutillas",
+      "origen": "base"
+    },
+    {
+      "nombre": "Uvas",
+      "tipo": "fruta",
+      "porcion": "1 taza",
+      "carbohidratos": 25,
+      "momentos": [
+        "desayuno",
+        "merienda",
+        "colacion",
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "uvas",
+      "origen": "base"
+    },
+    {
+      "nombre": "Ensalada de frutas",
+      "tipo": "fruta",
+      "porcion": "1 taza",
+      "carbohidratos": 20,
+      "momentos": [
+        "desayuno",
+        "merienda",
+        "colacion",
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "ensalada-de-frutas",
+      "origen": "base"
+    },
+    {
+      "nombre": "Agua / soda",
+      "tipo": "bebida",
+      "porcion": "libre",
+      "carbohidratos": 0,
+      "momentos": [
+        "desayuno",
+        "almuerzo",
+        "merienda",
+        "cena",
+        "colacion"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "agua-soda",
+      "origen": "base"
+    },
+    {
+      "nombre": "Gaseosa sin azúcar",
+      "tipo": "bebida",
+      "porcion": "1 vaso o lata",
+      "carbohidratos": 0,
+      "momentos": [
+        "desayuno",
+        "almuerzo",
+        "merienda",
+        "cena",
+        "colacion"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "gaseosa-sin-azucar",
+      "origen": "base"
+    },
+    {
+      "nombre": "Café solo con edulcorante",
+      "tipo": "bebida",
+      "porcion": "1 taza",
+      "carbohidratos": 0,
+      "momentos": [
+        "desayuno",
+        "merienda"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "cafe-solo-con-edulcorante",
+      "origen": "base"
+    },
+    {
+      "nombre": "Mate (amargo o con edulcorante)",
+      "tipo": "bebida",
+      "porcion": "libre",
+      "carbohidratos": 0,
+      "momentos": [
+        "desayuno",
+        "almuerzo",
+        "merienda",
+        "cena",
+        "colacion"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "mate-amargo-o-con-edulcorante",
+      "origen": "base"
+    },
+    {
+      "nombre": "Té",
+      "tipo": "bebida",
+      "porcion": "1 taza",
+      "carbohidratos": 0,
+      "momentos": [
+        "desayuno",
+        "merienda"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "te",
+      "origen": "base"
+    },
+    {
+      "nombre": "Jugo de naranja exprimido",
+      "tipo": "bebida",
+      "porcion": "1 vaso",
+      "carbohidratos": 22,
+      "momentos": [
+        "desayuno"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "La única bebida habitual que cuenta.",
+      "id": "jugo-de-naranja-exprimido",
+      "origen": "base"
+    },
+    {
+      "nombre": "Cerveza",
+      "tipo": "bebida",
+      "porcion": "1 lata (350 ml)",
+      "carbohidratos": 13,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "Ocasional.",
+      "id": "cerveza",
+      "origen": "base"
+    },
+    {
+      "nombre": "Vino",
+      "tipo": "bebida",
+      "porcion": "1 copa",
+      "carbohidratos": 3,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "Ocasional.",
+      "id": "vino",
+      "origen": "base"
+    },
+    {
+      "nombre": "Gelatina sin azúcar",
+      "tipo": "extra",
+      "porcion": "1 pote",
+      "carbohidratos": 0,
+      "momentos": [
+        "almuerzo",
+        "cena",
+        "colacion"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "gelatina-sin-azucar",
+      "origen": "base"
+    },
+    {
+      "nombre": "Postre lácteo común (flan, chocolatado)",
+      "tipo": "extra",
+      "porcion": "1 pote",
+      "carbohidratos": 20,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "postre-lacteo-comun-flan-chocolatado",
+      "origen": "base"
+    },
+    {
+      "nombre": "Flan casero",
+      "tipo": "extra",
+      "porcion": "1 porción",
+      "carbohidratos": 20,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "flan-casero",
+      "origen": "base"
+    },
+    {
+      "nombre": "Helado",
+      "tipo": "extra",
+      "porcion": "1 bocha",
+      "carbohidratos": 18,
+      "momentos": [
+        "almuerzo",
+        "cena"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "helado",
+      "origen": "base"
+    },
+    {
+      "nombre": "Chocolate",
+      "tipo": "extra",
+      "porcion": "2 cuadraditos",
+      "carbohidratos": 8,
+      "momentos": [
+        "merienda",
+        "colacion"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "chocolate",
+      "origen": "base"
+    },
+    {
+      "nombre": "Alfajor simple",
+      "tipo": "extra",
+      "porcion": "1 unidad",
+      "carbohidratos": 30,
+      "momentos": [
+        "merienda"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "",
+      "id": "alfajor-simple",
+      "origen": "base"
+    },
+    {
+      "nombre": "Galletitas dulces",
+      "tipo": "extra",
+      "porcion": "3 unidades",
+      "carbohidratos": 20,
+      "momentos": [
+        "merienda",
+        "colacion"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "galletitas-dulces",
+      "origen": "base"
+    },
+    {
+      "nombre": "Papas fritas de paquete",
+      "tipo": "extra",
+      "porcion": "1 puñado",
+      "carbohidratos": 13,
+      "momentos": [
+        "colacion"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "papas-fritas-de-paquete",
+      "origen": "base"
+    },
+    {
+      "nombre": "Palitos salados",
+      "tipo": "extra",
+      "porcion": "1 puñado",
+      "carbohidratos": 15,
+      "momentos": [
+        "colacion"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "palitos-salados",
+      "origen": "base"
+    },
+    {
+      "nombre": "Pochoclo casero",
+      "tipo": "extra",
+      "porcion": "1 taza",
+      "carbohidratos": 6,
+      "momentos": [
+        "colacion"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": false,
+      "nota": "",
+      "id": "pochoclo-casero",
+      "origen": "base"
+    },
+    {
+      "nombre": "Queso en cubos",
+      "tipo": "extra",
+      "porcion": "1 puñado",
+      "carbohidratos": 0,
+      "momentos": [
+        "colacion"
+      ],
+      "mealPrep": false,
+      "traeCarbohidratos": false,
+      "altaFibra": false,
+      "altaGrasa": true,
+      "nota": "",
+      "id": "queso-en-cubos",
+      "origen": "base"
+    }
+  ]
+}

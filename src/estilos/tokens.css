@@ -1,0 +1,105 @@
+/* Dieta — tokens generados desde el sistema de diseño. No editar a mano: cambiar en tokens.json. */
+:root {
+  --surface: #f5f7f3; /* Fondo de la pantalla. Verdoso muy apagado, nunca blanco puro. */
+  --surface-raised: #ffffff; /* Fondo de tarjetas (pieza, plato) y de la barra de acciones, sobre surface. */
+  --surface-sunken: #e9ede8; /* Fondo de campos de texto y de la pista vacía de la barra de rango. */
+  --ink: #1c261f; /* Texto principal y el número grande de carbohidratos, sobre surface y surface-raised. */
+  --ink-muted: #5a6960; /* Texto secundario: porción casera, horas, notas. Sobre surface y surface-raised (4.5:1 o más en ambos temas). */
+  --line: #d6ddd6; /* Bordes de tarjetas y separadores de lista. Decorativo: no lleva significado. */
+  --accent: #3b7a5a; /* Verde salvia. Botón principal, momento del día seleccionado, enlaces. Como texto, solo sobre surface y surface-raised. */
+  --on-accent: #ffffff; /* Texto e íconos sobre accent. */
+  --accent-soft: #e1eee6; /* Fondo de la variante seleccionada y del chip de momento activo; el texto encima va en ink. */
+  --focus: #245240; /* Anillo de foco de 2 px sobre cualquier superficie, visible al navegar con teclado. */
+  --state-ok: #286b44; /* Plato dentro del rango del momento: texto del estado y relleno de la barra de rango. */
+  --state-ok-soft: #dff0e4; /* Fondo del chip de estado 'en rango'. Texto en state-ok. */
+  --state-over: #9a5310; /* Plato por encima del rango. Ámbar, no rojo: avisa sin alarmar. */
+  --state-over-soft: #faeddb; /* Fondo del chip 'por encima'. Texto en state-over. */
+  --state-under: #476a8a; /* Plato por debajo del rango. Azul grisáceo. */
+  --state-under-soft: #e2eaf2; /* Fondo del chip 'por debajo'. Texto en state-under. */
+  --fibra: #53742a; /* Indicador F (alta fibra): letra y borde del badge. */
+  --fibra-soft: #e7efd8; /* Fondo del badge F. */
+  --grasa: #7a4d72; /* Indicador G (alta grasa): letra y borde del badge. Ciruela, para no confundirse con el ámbar de 'por encima'. */
+  --grasa-soft: #f1e4ee; /* Fondo del badge G. */
+  --overlay: #1c261f99; /* Velo detrás de hojas inferiores (bottom sheets) y diálogos. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --touch-min: 48px;
+  --touch-primary: 56px;
+  --thumb-zone: 40%;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+  --shadow-card: 0 1px 2px #1c261f14;
+  --shadow-bar: 0 -2px 12px #1c261f14;
+  --font-sans: "Atkinson Hyperlegible", "Segoe UI", Roboto, system-ui, sans-serif;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --surface: #141a16;
+  --surface-raised: #1e2621;
+  --surface-sunken: #0e1310;
+  --ink: #edf1ec;
+  --ink-muted: #a4b0a8;
+  --line: #33403a;
+  --accent: #86bf9d;
+  --on-accent: #0f2118;
+  --accent-soft: #243a2f;
+  --focus: #b7dcc6;
+  --state-ok: #8ccaa4;
+  --state-ok-soft: #1f3a2b;
+  --state-over: #e8a862;
+  --state-over-soft: #3f2d1b;
+  --state-under: #93b8da;
+  --state-under-soft: #1f2e3c;
+  --fibra: #aacb70;
+  --fibra-soft: #2a3620;
+  --grasa: #cf9fc7;
+  --grasa-soft: #372a35;
+  --overlay: #00000099;
+  --shadow-card: 0 1px 2px #00000066;
+  --shadow-bar: 0 -2px 12px #00000080;
+  color-scheme: dark;
+} }
+
+[data-theme="dark"] {
+  --surface: #141a16;
+  --surface-raised: #1e2621;
+  --surface-sunken: #0e1310;
+  --ink: #edf1ec;
+  --ink-muted: #a4b0a8;
+  --line: #33403a;
+  --accent: #86bf9d;
+  --on-accent: #0f2118;
+  --accent-soft: #243a2f;
+  --focus: #b7dcc6;
+  --state-ok: #8ccaa4;
+  --state-ok-soft: #1f3a2b;
+  --state-over: #e8a862;
+  --state-over-soft: #3f2d1b;
+  --state-under: #93b8da;
+  --state-under-soft: #1f2e3c;
+  --fibra: #aacb70;
+  --fibra-soft: #2a3620;
+  --grasa: #cf9fc7;
+  --grasa-soft: #372a35;
+  --overlay: #00000099;
+  --shadow-card: 0 1px 2px #00000066;
+  --shadow-bar: 0 -2px 12px #00000080;
+  color-scheme: dark;
+}
+
+/* Estilos de texto */
+.carb-xl { font-size: 56px; line-height: 60px; font-weight: 700; letter-spacing: -0.02em; } /* El total de carbohidratos del plato propuesto. Uno por pantalla. */
+.carb-lg { font-size: 32px; line-height: 36px; font-weight: 700; letter-spacing: -0.01em; } /* Carbohidratos de una pieza dentro de su tarjeta, o total de una variante no seleccionada. */
+.title { font-size: 24px; line-height: 30px; font-weight: 700; } /* Título de pantalla y nombre del momento del día. */
+.heading { font-size: 19px; line-height: 24px; font-weight: 700; } /* Nombre de pieza en su tarjeta; títulos de sección. */
+.body { font-size: 17px; line-height: 24px; font-weight: 400; } /* Texto corriente, porción casera, notas. Nunca menos de 17 px para texto que se lee. */
+.body-strong { font-size: 17px; line-height: 24px; font-weight: 700; } /* Etiquetas de botones y valores que hay que ubicar rápido. */
+.label { font-size: 15px; line-height: 20px; font-weight: 700; letter-spacing: 0.04em; } /* Chips, badges y títulos en mayúsculas. Siempre en negrita y siempre con un color de 4.5:1. */
+.meta { font-size: 15px; line-height: 20px; font-weight: 400; } /* Horas y datos secundarios del historial, en ink-muted. Es el tamaño mínimo del sistema. */

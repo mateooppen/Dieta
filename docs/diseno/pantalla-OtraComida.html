@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Otra comida</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+body{margin:0}
+a{color:#3b7a5a}a:hover{color:#245240}
+.app{--surface:#f5f7f3;--raised:#ffffff;--sunken:#e9ede8;--ink:#1c261f;--muted:#5a6960;--line:#d6ddd6;--accent:#3b7a5a;--on-accent:#ffffff;--accent-soft:#e1eee6;--focus:#245240;--ok:#286b44;--ok-soft:#dff0e4;--over:#9a5310;--over-soft:#faeddb;--under:#476a8a;--under-soft:#e2eaf2;--fibra:#53742a;--fibra-soft:#e7efd8;--grasa:#7a4d72;--grasa-soft:#f1e4ee;--overlay:#1c261f99;--shadow-card:0 1px 2px #1c261f14;--shadow-bar:0 -2px 12px #1c261f14}
+.app.oscuro{--surface:#141a16;--raised:#1e2621;--sunken:#0e1310;--ink:#edf1ec;--muted:#a4b0a8;--line:#33403a;--accent:#86bf9d;--on-accent:#0f2118;--accent-soft:#243a2f;--focus:#b7dcc6;--ok:#8ccaa4;--ok-soft:#1f3a2b;--over:#e8a862;--over-soft:#3f2d1b;--under:#93b8da;--under-soft:#1f2e3c;--fibra:#aacb70;--fibra-soft:#2a3620;--grasa:#cf9fc7;--grasa-soft:#372a35;--overlay:#00000099;--shadow-card:0 1px 2px #00000066;--shadow-bar:0 -2px 12px #00000080}
+.app{font-family:"Atkinson Hyperlegible","Segoe UI",Roboto,system-ui,sans-serif;font-size:17px;line-height:24px;color:var(--ink);background:var(--surface)}
+.app *{box-sizing:border-box}
+.app button,.app input,.app textarea{font:inherit}
+.app button{cursor:pointer}
+.app button:focus-visible,.app a:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+.chip{display:inline-flex;align-items:center;height:32px;padding:0 12px;border-radius:999px;font-size:15px;line-height:20px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.chip.ok{color:var(--ok);background:var(--ok-soft)}.chip.over{color:var(--over);background:var(--over-soft)}.chip.under{color:var(--under);background:var(--under-soft)}
+.badge{display:inline-flex;align-items:center;height:26px;padding:0 8px;border-radius:8px;font-size:15px;line-height:20px;font-weight:700;letter-spacing:.04em;border:1.5px solid transparent;white-space:nowrap}
+.badge.f{color:var(--fibra);background:var(--fibra-soft);border-color:var(--fibra)}.badge.g{color:var(--grasa);background:var(--grasa-soft);border-color:var(--grasa)}
+.badge.nv{color:var(--over);background:var(--over-soft);border-color:var(--over)}
+.rol{font-size:15px;line-height:20px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.ic{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;font-weight:700;border:1.5px solid transparent}
+.btn.primary{height:56px;flex:1;min-width:0;background:var(--accent);color:var(--on-accent)}
+.btn.primary[disabled]{opacity:.45;cursor:default}
+.btn.secondary{height:48px;padding:0 16px;background:var(--raised);color:var(--ink);border-color:var(--line)}
+.btn.ghost{height:44px;padding:0 10px;background:transparent;color:var(--accent)}
+.iconbtn{width:44px;height:44px;border-radius:14px;border:1.5px solid var(--line);background:var(--raised);color:var(--ink);display:inline-flex;align-items:center;justify-content:center}
+.field{display:flex;align-items:center;gap:12px;height:48px;width:100%;padding:0 12px;background:var(--sunken);border-radius:8px;border:2px solid transparent;color:var(--ink)}
+.field.focus{border-color:var(--accent)}
+.field input{flex:1;min-width:0;border:0;background:transparent;color:inherit;outline:none}
+.field input::placeholder{color:var(--muted)}
+.res{width:100%;text-align:left;display:flex;align-items:center;gap:12px;min-height:56px;padding:8px 0;border:0;border-top:1px solid var(--line);background:transparent;color:var(--ink)}
+.res .txt{flex:1;min-width:0;display:flex;flex-direction:column}
+.res .add{color:var(--accent);display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:var(--accent-soft);flex:none}
+.sel{display:flex;align-items:center;gap:10px;min-height:48px;padding:6px 0;border-top:1px solid var(--line)}
+.sel .quitar{width:36px;height:36px;border-radius:10px;border:1.5px solid var(--line);background:var(--raised);color:var(--muted);display:inline-flex;align-items:center;justify-content:center;flex:none}
+.range{position:relative;height:12px;border-radius:999px;background:var(--sunken);overflow:hidden}
+.range .zone{position:absolute;top:0;bottom:0;background:var(--accent-soft)}
+.range .fill{position:absolute;top:0;bottom:0;left:0;border-radius:999px;background:var(--ok)}
+.range .fill.over{background:var(--over)}.range .fill.under{background:var(--under)}
+.area{width:100%;min-height:72px;padding:12px;border-radius:8px;border:2px solid transparent;background:var(--sunken);color:var(--ink);resize:none;outline:none;line-height:24px}
+.area::placeholder{color:var(--muted)}
+.check{display:flex;align-items:center;gap:10px;min-height:44px}
+.check .box{width:24px;height:24px;border-radius:6px;border:2px solid var(--accent);background:var(--accent);color:var(--on-accent);display:inline-flex;align-items:center;justify-content:center;flex:none}
+</style>
+</helmet>
+<div class="app {{temaClass}}" style="width: 390px; height: 844px; position: relative; overflow: hidden; display: flex; flex-direction: column;">
+
+  <div style="flex: 1; min-height: 0; overflow-y: auto; padding: 16px 16px 24px; display: flex; flex-direction: column; gap: 20px;">
+
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <a href="Main.dc.html" class="iconbtn" aria-label="Volver a la propuesta" style="text-decoration: none;">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+      </a>
+      <div style="display: flex; flex-direction: column;">
+        <span style="font-size: 24px; line-height: 30px; font-weight: 700;">Otra comida</span>
+        <span style="font-size: 15px; line-height: 20px; color: var(--muted);">Almuerzo · rango 50–60 g</span>
+      </div>
+    </div>
+
+    <div style="background: var(--raised); border-radius: 22px; box-shadow: var(--shadow-card); padding: 16px; display: flex; flex-direction: column; gap: 8px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+        <span class="rol">Lo que voy a comer</span>
+        <span class="chip {{estado}}">{{estadoTexto}}</span>
+      </div>
+      <div style="display: flex; align-items: baseline; gap: 12px; margin: 2px 0 6px;">
+        <span class="num" style="font-size: 56px; line-height: 60px; font-weight: 700; letter-spacing: -0.02em;">{{total}}<span style="font-size: 19px; color: var(--muted); letter-spacing: 0; margin-left: 4px;">g</span></span>
+        <span style="color: var(--muted); font-size: 15px; line-height: 20px;">de 50–60 g</span>
+      </div>
+      <div class="range" aria-hidden="true"><div class="zone" style="left: 64%; width: 13%;"></div><div class="fill {{estado}}" style="width: {{pct}}%;"></div></div>
+      <div style="display: flex; flex-direction: column; margin-top: 8px;">
+        <sc-if value="{{vacio}}" hint-placeholder-val="{{false}}">
+          <span style="color: var(--muted); padding: 8px 0;">Todavía no agregaste nada. Buscá una pieza o describí lo que vas a comer.</span>
+        </sc-if>
+        <sc-for list="{{elegidas}}" as="e" hint-placeholder-count="2">
+          <div class="sel">
+            <span style="flex: 1; min-width: 0; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;"><span>{{e.nombre}}</span><sc-if value="{{e.nv}}" hint-placeholder-val="{{false}}"><span class="badge nv">Sin validar</span></sc-if><sc-if value="{{e.f}}" hint-placeholder-val="{{false}}"><span class="badge f">Fibra</span></sc-if><sc-if value="{{e.g}}" hint-placeholder-val="{{false}}"><span class="badge g">Grasa</span></sc-if></span>
+            <b class="num" style="flex: none;">{{e.carb}} g</b>
+            <button class="quitar" onClick="{{e.quitar}}" aria-label="Quitar {{e.nombre}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width: 18px; height: 18px;"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <label for="buscar" class="rol">Buscar en mis piezas</label>
+      <div class="field {{focoBusqueda}}">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="color: var(--muted);"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <input id="buscar" type="search" placeholder="Nombre de la pieza" value="{{busqueda}}" onInput="{{escribir}}" aria-label="Buscar en mis piezas">
+      </div>
+      <sc-if value="{{hayResultados}}" hint-placeholder-val="{{true}}">
+        <div style="display: flex; flex-direction: column; border-bottom: 1px solid var(--line);">
+          <sc-for list="{{resultados}}" as="r" hint-placeholder-count="3">
+            <button class="res" onClick="{{r.agregar}}">
+              <span class="txt"><span style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;"><span style="font-weight: 700;">{{r.nombre}}</span><sc-if value="{{r.f}}" hint-placeholder-val="{{false}}"><span class="badge f">Fibra</span></sc-if><sc-if value="{{r.g}}" hint-placeholder-val="{{false}}"><span class="badge g">Grasa</span></sc-if></span><span style="color: var(--muted); font-size: 15px; line-height: 20px;">{{r.porcion}}</span></span>
+              <b class="num" style="flex: none;">{{r.carb}} g</b>
+              <span class="add" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path d="M12 5v14M5 12h14"/></svg></span>
+            </button>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{sinResultados}}" hint-placeholder-val="{{false}}">
+        <span style="color: var(--muted);">No hay piezas con ese nombre. Describila abajo y la app estima los carbohidratos.</span>
+      </sc-if>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <label for="descripcion" class="rol">No está en la lista: describila</label>
+      <textarea id="descripcion" class="area" rows="3" placeholder="Qué y cuánto. Por ejemplo: 2 porciones de tarta de jamón y queso de la rotisería" onInput="{{escribirDesc}}" value="{{descripcion}}"></textarea>
+      <sc-if value="{{sinEstimacion}}" hint-placeholder-val="{{true}}">
+        <button class="btn secondary" onClick="{{estimar}}" style="align-self: flex-start;">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width: 20px; height: 20px;"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 17l.7 1.8 1.8.7-1.8.7L19 22l-.7-1.8-1.8-.7 1.8-.7z"/></svg>
+          Estimar carbohidratos
+        </button>
+      </sc-if>
+      <sc-if value="{{conEstimacion}}" hint-placeholder-val="{{false}}">
+        <div style="background: var(--raised); border: 1.5px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px;">
+          <span class="rol">Estimación con IA</span>
+          <div style="display: flex; align-items: baseline; gap: 10px;">
+            <span class="num" style="font-size: 32px; line-height: 36px; font-weight: 700; letter-spacing: -0.01em;">40<span style="font-size: 17px; font-weight: 400; color: var(--muted); letter-spacing: 0;"> g</span></span>
+            <span style="color: var(--muted); font-size: 15px; line-height: 20px;">probablemente entre 34 y 48 g</span>
+          </div>
+          <div style="display: flex; gap: 4px;"><span class="badge g">Grasa</span></div>
+          <span style="font-size: 15px; line-height: 20px; color: var(--muted);">Dos porciones de tarta: casi todo el carbohidrato viene de la masa (unos 17 g por porción). El relleno de jamón y queso aporta poco, pero suma grasa, así que la glucosa puede subir más tarde.</span>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="color: var(--muted); font-size: 15px; line-height: 20px;">Si no coincide, corregilo:</span>
+            <div class="field" style="width: 96px; height: 44px;"><input type="number" value="40" aria-label="Carbohidratos corregidos" style="width: 100%;"><span style="color: var(--muted);">g</span></div>
+          </div>
+          <label class="check"><span class="box"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width: 16px; height: 16px; stroke-width: 3;"><path d="m5 12 5 5L20 7"/></svg></span><span>Guardar como pieza nueva <span style="color: var(--muted);">(queda marcada "No validada")</span></span></label>
+          <button class="btn secondary" onClick="{{agregarEstimada}}" style="align-self: stretch;">Agregar a lo que voy a comer</button>
+        </div>
+      </sc-if>
+    </div>
+
+  </div>
+
+  <div style="display: flex; align-items: center; gap: 8px; padding: 12px 16px 28px; background: var(--raised); box-shadow: var(--shadow-bar); border-radius: 22px 22px 0 0;">
+    <a href="Main.dc.html" class="btn ghost" style="text-decoration: none;">Cancelar</a>
+    <button class="btn primary" disabled="{{deshabilitado}}">Voy a comer esto</button>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"temaInicial":{"editor":"enum","options":["claro","oscuro"],"default":"claro","section":"Vista"},"busquedaInicial":{"editor":"text","default":"","section":"Vista"},"mostrarEstimacion":{"editor":"boolean","default":false,"section":"Vista"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { dark: null, busqueda: null, descripcion: null, estimacion: null, elegidas: [] };
+  }
+  renderVals() {
+    const dark = this.state.dark === null ? (this.props.temaInicial ?? 'claro') === 'oscuro' : this.state.dark;
+    const busqueda = this.state.busqueda === null ? (this.props.busquedaInicial ?? '') : this.state.busqueda;
+    const conEstimacion = this.state.estimacion === null ? !!(this.props.mostrarEstimacion ?? false) : this.state.estimacion;
+    const descripcion = this.state.descripcion === null ? (conEstimacion ? '2 porciones de tarta de jamón y queso de la rotisería' : '') : this.state.descripcion;
+    const min = 50, max = 60, escala = Math.round(max * 1.3);
+    const piezas = [
+      { id: 'mila', nombre: 'Milanesa de pollo', porcion: '1 unidad mediana', carb: 15, g: true },
+      { id: 'milam', nombre: 'Milanesa de merluza', porcion: '1 unidad mediana', carb: 15, g: true },
+      { id: 'tarta', nombre: 'Tarta de verduras', porcion: '1 porción (⅛ de tarta)', carb: 20, g: true },
+      { id: 'arroz', nombre: 'Arroz blanco', porcion: '½ plato playo (1 taza)', carb: 42 },
+      { id: 'pure', nombre: 'Puré de papa', porcion: '½ plato playo (1 taza)', carb: 35 },
+      { id: 'pizza', nombre: 'Pizza casera', porcion: '2 porciones (de 8)', carb: 45, g: true },
+      { id: 'empanadas', nombre: 'Empanadas de carne al horno', porcion: '2 unidades', carb: 40, g: true },
+      { id: 'sand', nombre: 'Sándwich de jamón y queso', porcion: '1 unidad', carb: 30, g: true },
+      { id: 'hoja', nombre: 'Ensalada de hoja', porcion: '1 plato playo', carb: 3 },
+      { id: 'manzana', nombre: 'Manzana', porcion: '1 mediana', carb: 15, f: true },
+      { id: 'helado', nombre: 'Helado', porcion: '1 bocha', carb: 18 }
+    ];
+    const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+    const q = norm(busqueda.trim());
+    const elegidasIds = this.state.elegidas.map(e => e.id);
+    const resultados = (q ? piezas.filter(p => norm(p.nombre).includes(q)) : []).filter(p => !elegidasIds.includes(p.id)).slice(0, 4)
+      .map(p => Object.assign({}, p, { agregar: () => this.setState({ elegidas: this.state.elegidas.concat([p]), busqueda: '' }) }));
+    const elegidas = this.state.elegidas.map((e, i) => Object.assign({}, e, { quitar: () => this.setState({ elegidas: this.state.elegidas.filter((x, j) => j !== i) }) }));
+    const total = elegidas.reduce((s, e) => s + e.carb, 0);
+    const estado = total > max ? 'over' : (total < min ? 'under' : 'ok');
+    const TXT = { ok: 'En rango', over: 'Por encima', under: 'Por debajo' };
+    return {
+      temaClass: dark ? 'oscuro' : '',
+      busqueda, escribir: (ev) => this.setState({ busqueda: ev.target.value }),
+      focoBusqueda: q ? 'focus' : '',
+      resultados, hayResultados: resultados.length > 0, sinResultados: !!q && resultados.length === 0,
+      elegidas, vacio: elegidas.length === 0,
+      total, estado, estadoTexto: TXT[estado], pct: Math.min(100, Math.round(total / escala * 100)),
+      descripcion, escribirDesc: (ev) => this.setState({ descripcion: ev.target.value }),
+      conEstimacion, sinEstimacion: !conEstimacion,
+      estimar: () => this.setState({ estimacion: true, descripcion: descripcion || '2 porciones de tarta de jamón y queso de la rotisería' }),
+      agregarEstimada: () => this.setState({ elegidas: this.state.elegidas.concat([{ id: 'nueva-' + Date.now(), nombre: 'Tarta de jamón y queso (rotisería)', porcion: '2 porciones', carb: 40, g: true, nv: true }]), estimacion: false, descripcion: '' }),
+      deshabilitado: elegidas.length === 0
+    };
+  }
+}
+</script>
+</body>
+</html>

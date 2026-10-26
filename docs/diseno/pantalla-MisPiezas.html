@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Mis piezas</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+body{margin:0}
+a{color:#3b7a5a}a:hover{color:#245240}
+.app{--surface:#f5f7f3;--raised:#ffffff;--sunken:#e9ede8;--ink:#1c261f;--muted:#5a6960;--line:#d6ddd6;--accent:#3b7a5a;--on-accent:#ffffff;--accent-soft:#e1eee6;--focus:#245240;--ok:#286b44;--ok-soft:#dff0e4;--over:#9a5310;--over-soft:#faeddb;--under:#476a8a;--under-soft:#e2eaf2;--fibra:#53742a;--fibra-soft:#e7efd8;--grasa:#7a4d72;--grasa-soft:#f1e4ee;--overlay:#1c261f99;--shadow-card:0 1px 2px #1c261f14;--shadow-bar:0 -2px 12px #1c261f14}
+.app.oscuro{--surface:#141a16;--raised:#1e2621;--sunken:#0e1310;--ink:#edf1ec;--muted:#a4b0a8;--line:#33403a;--accent:#86bf9d;--on-accent:#0f2118;--accent-soft:#243a2f;--focus:#b7dcc6;--ok:#8ccaa4;--ok-soft:#1f3a2b;--over:#e8a862;--over-soft:#3f2d1b;--under:#93b8da;--under-soft:#1f2e3c;--fibra:#aacb70;--fibra-soft:#2a3620;--grasa:#cf9fc7;--grasa-soft:#372a35;--overlay:#00000099;--shadow-card:0 1px 2px #00000066;--shadow-bar:0 -2px 12px #00000080}
+.app{font-family:"Atkinson Hyperlegible","Segoe UI",Roboto,system-ui,sans-serif;font-size:17px;line-height:24px;color:var(--ink);background:var(--surface)}
+.app *{box-sizing:border-box}
+.app button,.app input{font:inherit}
+.app button{cursor:pointer}
+.app button:focus-visible,.app a:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+.badge{display:inline-flex;align-items:center;height:26px;padding:0 8px;border-radius:8px;font-size:15px;line-height:20px;font-weight:700;letter-spacing:.04em;border:1.5px solid transparent;white-space:nowrap}
+.badge.f{color:var(--fibra);background:var(--fibra-soft);border-color:var(--fibra)}.badge.g{color:var(--grasa);background:var(--grasa-soft);border-color:var(--grasa)}
+.badge.mp{color:var(--muted);background:var(--sunken)}
+.badge.nv{color:var(--over);background:var(--over-soft);border-color:var(--over)}
+.rol{font-size:15px;line-height:20px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.ic{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;font-weight:700;border:1.5px solid transparent}
+.btn.primary{height:56px;flex:1;min-width:0;background:var(--accent);color:var(--on-accent)}
+.btn.secondary{height:48px;padding:0 16px;background:var(--raised);color:var(--ink);border-color:var(--line)}
+.btn.ghost{height:44px;padding:0 10px;background:transparent;color:var(--accent)}
+.btn.danger{height:44px;padding:0 10px;background:transparent;color:var(--muted)}
+.iconbtn{width:44px;height:44px;border-radius:14px;border:1.5px solid var(--line);background:var(--raised);color:var(--ink);display:inline-flex;align-items:center;justify-content:center}
+.field{display:flex;align-items:center;gap:12px;height:48px;width:100%;padding:0 12px;background:var(--sunken);border-radius:8px;border:2px solid transparent;color:var(--ink)}
+.field.focus{border-color:var(--accent)}
+.field input{flex:1;min-width:0;border:0;background:transparent;color:inherit;outline:none}
+.field input::placeholder{color:var(--muted)}
+.filtro{flex:none;height:40px;padding:0 14px;border-radius:999px;font-weight:700;font-size:15px;background:var(--raised);color:var(--ink);border:1.5px solid var(--line)}
+.filtro.on{background:var(--accent-soft);border:2px solid var(--accent)}
+.pieza{width:100%;text-align:left;display:flex;align-items:center;gap:12px;min-height:64px;padding:10px 16px;background:var(--raised);border:1.5px solid var(--line);border-radius:14px;color:var(--ink)}
+.pieza .txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.pieza .nombre{font-size:19px;line-height:24px;font-weight:700}
+.pieza .carb{font-size:32px;line-height:36px;font-weight:700;letter-spacing:-.01em;flex:none}
+.pieza .carb .g{font-size:17px;font-weight:400;color:var(--muted);letter-spacing:0}
+.lbl{font-size:15px;line-height:20px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.opt{height:40px;padding:0 14px;border-radius:999px;font-weight:700;font-size:15px;background:var(--raised);color:var(--ink);border:1.5px solid var(--line)}
+.opt.on{background:var(--accent-soft);border:2px solid var(--accent)}
+.step{display:flex;align-items:center;gap:0;border-radius:8px;background:var(--sunken);height:48px}
+.step button{width:48px;height:48px;border:0;background:transparent;color:var(--accent);font-size:24px;font-weight:700}
+.step input{width:72px;text-align:center;border:0;background:transparent;color:var(--ink);font-size:24px;font-weight:700;outline:none}
+.sw{display:flex;align-items:center;justify-content:space-between;min-height:48px;gap:12px}
+.tog{width:52px;height:32px;border-radius:999px;background:var(--line);position:relative;border:0;flex:none}
+.tog.on{background:var(--accent)}
+.tog::after{content:"";position:absolute;top:4px;left:4px;width:24px;height:24px;border-radius:50%;background:#fff}
+.tog.on::after{left:24px}
+</style>
+</helmet>
+<div class="app {{temaClass}}" style="width: 390px; height: 844px; position: relative; overflow: hidden; display: flex; flex-direction: column;">
+
+  <div style="flex: 1; min-height: 0; overflow-y: auto; padding: 16px 16px 24px; display: flex; flex-direction: column; gap: 14px;">
+
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <a href="Main.dc.html" class="iconbtn" aria-label="Volver a la propuesta" style="text-decoration: none;">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+      </a>
+      <div style="display: flex; flex-direction: column;">
+        <span style="font-size: 24px; line-height: 30px; font-weight: 700;">Mis piezas</span>
+        <span style="font-size: 15px; line-height: 20px; color: var(--muted);">{{resumen}}</span>
+      </div>
+    </div>
+
+    <div class="field {{focoBusqueda}}">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="color: var(--muted);"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      <input id="buscar-piezas" type="search" placeholder="Buscar pieza" value="{{busqueda}}" onInput="{{escribir}}" aria-label="Buscar pieza">
+    </div>
+
+    <div role="group" aria-label="Filtrar por tipo" style="display: flex; gap: 8px; overflow-x: auto; margin: 0 -16px; padding: 0 16px 2px;">
+      <button class="filtro {{fTodas}}" onClick="{{fnTodas}}">Todas</button>
+      <button class="filtro {{fPrincipal}}" onClick="{{fnPrincipal}}">Principales</button>
+      <button class="filtro {{fAcomp}}" onClick="{{fnAcomp}}">Acompañamientos</button>
+      <button class="filtro {{fDesayuno}}" onClick="{{fnDesayuno}}">Desayuno / merienda</button>
+      <button class="filtro {{fFruta}}" onClick="{{fnFruta}}">Frutas</button>
+      <button class="filtro {{fBebida}}" onClick="{{fnBebida}}">Bebidas</button>
+      <button class="filtro {{fExtra}}" onClick="{{fnExtra}}">Extras</button>
+      <button class="filtro {{fNv}}" onClick="{{fnNv}}">Sin validar</button>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <sc-for list="{{lista}}" as="p" hint-placeholder-count="6">
+        <button class="pieza" onClick="{{p.abrir}}">
+          <span class="txt">
+            <span class="nombre">{{p.nombre}}</span>
+            <span style="color: var(--muted); font-size: 15px; line-height: 20px;">{{p.porcion}}</span>
+            <span style="display: flex; gap: 4px; flex-wrap: wrap; margin-top: 2px;"><sc-if value="{{p.f}}" hint-placeholder-val="{{false}}"><span class="badge f">Fibra</span></sc-if><sc-if value="{{p.g}}" hint-placeholder-val="{{false}}"><span class="badge g">Grasa</span></sc-if><sc-if value="{{p.mp}}" hint-placeholder-val="{{false}}"><span class="badge mp">Meal prep</span></sc-if><sc-if value="{{p.nv}}" hint-placeholder-val="{{false}}"><span class="badge nv">Sin validar</span></sc-if></span>
+          </span>
+          <span class="carb num">{{p.carb}}<span class="g"> g</span></span>
+        </button>
+      </sc-for>
+      <sc-if value="{{sinResultados}}" hint-placeholder-val="{{false}}">
+        <span style="color: var(--muted); padding: 8px 0;">No hay piezas con ese nombre. Podés agregarla con el botón de abajo.</span>
+      </sc-if>
+    </div>
+
+  </div>
+
+  <div style="display: flex; align-items: center; gap: 8px; padding: 12px 16px 28px; background: var(--raised); box-shadow: var(--shadow-bar); border-radius: 22px 22px 0 0;">
+    <button class="btn primary" onClick="{{nueva}}">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+      Agregar pieza
+    </button>
+  </div>
+
+  <sc-if value="{{hoja}}" hint-placeholder-val="{{false}}">
+    <div style="position: absolute; inset: 0; background: var(--overlay); display: flex; flex-direction: column; justify-content: flex-end;">
+      <button onClick="{{cerrarHoja}}" aria-label="Cerrar" style="flex: 1; border: 0; background: transparent; cursor: pointer;"></button>
+      <div style="background: var(--surface); border-radius: 22px 22px 0 0; padding: 12px 16px 28px; display: flex; flex-direction: column; gap: 16px; max-height: 94%; overflow-y: auto;">
+        <div style="width: 40px; height: 4px; border-radius: 999px; background: var(--line); align-self: center; flex: none;"></div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 24px; line-height: 30px; font-weight: 700; flex: 1;">{{hojaTitulo}}</span>
+          <sc-if value="{{ed.nv}}" hint-placeholder-val="{{false}}"><span class="badge nv">Sin validar</span></sc-if>
+          <button class="iconbtn" onClick="{{cerrarHoja}}" aria-label="Cerrar sin guardar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width: 20px; height: 20px;"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <label for="ed-nombre" class="lbl">Nombre</label>
+          <div class="field"><input id="ed-nombre" value="{{ed.nombre}}" placeholder="Por ejemplo: Tarta de choclo"></div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <label for="ed-porcion" class="lbl">Porción casera</label>
+          <div class="field"><input id="ed-porcion" value="{{ed.porcion}}" placeholder="1 porción, ½ plato, 1 taza…"></div>
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+          <label for="ed-carb" class="lbl">Carbohidratos por porción</label>
+          <div class="step"><button aria-label="Restar 1 gramo">−</button><input id="ed-carb" class="num" type="number" value="{{ed.carb}}"><span style="color: var(--muted); padding-right: 4px;">g</span><button aria-label="Sumar 1 gramo">+</button></div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <span class="lbl">Tipo</span>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <sc-for list="{{ed.tipos}}" as="t" hint-placeholder-count="6"><button class="opt {{t.on}}">{{t.nombre}}</button></sc-for>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <span class="lbl">Momentos en que va</span>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <sc-for list="{{ed.momentos}}" as="m" hint-placeholder-count="5"><button class="opt {{m.on}}" aria-pressed="{{m.pressed}}">{{m.nombre}}</button></sc-for>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; border-top: 1px solid var(--line);">
+          <div class="sw" style="border-bottom: 1px solid var(--line);"><span>Alta fibra <span style="color: var(--muted); font-size: 15px;">(4 g o más por porción)</span></span><button class="tog {{ed.fOn}}" aria-label="Alta fibra" aria-pressed="{{ed.f}}"></button></div>
+          <div class="sw" style="border-bottom: 1px solid var(--line);"><span>Alta grasa <span style="color: var(--muted); font-size: 15px;">(10 g o más por porción)</span></span><button class="tog {{ed.gOn}}" aria-label="Alta grasa" aria-pressed="{{ed.g}}"></button></div>
+          <div class="sw" style="border-bottom: 1px solid var(--line);"><span>Sirve para meal prep</span><button class="tog {{ed.mpOn}}" aria-label="Sirve para meal prep" aria-pressed="{{ed.mp}}"></button></div>
+          <div class="sw" style="border-bottom: 1px solid var(--line);"><span>Ya trae sus carbohidratos <span style="color: var(--muted); font-size: 15px;">(no lleva acompañamiento)</span></span><button class="tog {{ed.traeOn}}" aria-label="Ya trae sus carbohidratos" aria-pressed="{{ed.trae}}"></button></div>
+          <div class="sw"><span>Validada por la nutricionista</span><button class="tog {{ed.valOn}}" aria-label="Validada por la nutricionista" aria-pressed="{{ed.val}}"></button></div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <label for="ed-nota" class="lbl">Nota (opcional)</label>
+          <div class="field"><input id="ed-nota" value="{{ed.nota}}" placeholder="Para tener a mano, aclaraciones…"></div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px; padding-top: 4px;">
+          <sc-if value="{{ed.existente}}" hint-placeholder-val="{{true}}"><button class="btn danger" onClick="{{cerrarHoja}}">Eliminar</button></sc-if>
+          <button class="btn ghost" onClick="{{cerrarHoja}}" style="margin-left: auto;">Cancelar</button>
+          <button class="btn primary" onClick="{{cerrarHoja}}" style="flex: 0 0 auto; padding: 0 24px;">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"temaInicial":{"editor":"enum","options":["claro","oscuro"],"default":"claro","section":"Vista"},"filtroInicial":{"editor":"enum","options":["todas","principal","acomp","desayuno","fruta","bebida","extra","nv"],"default":"todas","section":"Vista"},"abrirPieza":{"editor":"text","default":"","section":"Vista"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { dark: null, busqueda: '', filtro: null, hoja: null };
+  }
+  renderVals() {
+    const dark = this.state.dark === null ? (this.props.temaInicial ?? 'claro') === 'oscuro' : this.state.dark;
+    const filtro = this.state.filtro === null ? (this.props.filtroInicial ?? 'todas') : this.state.filtro;
+    const hojaId = this.state.hoja === null ? (this.props.abrirPieza || null) : this.state.hoja;
+    const TIPOS = [
+      { id: 'principal', nombre: 'Principales' }, { id: 'acomp', nombre: 'Acompañamientos' }, { id: 'desayuno', nombre: 'Desayuno / merienda' },
+      { id: 'fruta', nombre: 'Frutas' }, { id: 'bebida', nombre: 'Bebidas' }, { id: 'extra', nombre: 'Extras' }
+    ];
+    const MOM = [['D', 'Desayuno'], ['A', 'Almuerzo'], ['M', 'Merienda'], ['C', 'Cena'], ['Col', 'Colación']];
+    const piezas = [
+      { id: 'mila', nombre: 'Milanesa de pollo o carne al horno', porcion: '1 unidad mediana', carb: 15, tipo: 'principal', g: true, mp: true, mom: ['A', 'C'], nota: 'Los carbohidratos vienen del empanado.' },
+      { id: 'guiso', nombre: 'Guiso de lentejas', porcion: '1 plato hondo', carb: 45, tipo: 'principal', f: true, mp: true, trae: true, mom: ['A', 'C'], nota: 'Varía con la cantidad de papa.' },
+      { id: 'tartar', nombre: 'Tarta de jamón y queso (rotisería)', porcion: '2 porciones', carb: 40, tipo: 'principal', g: true, nv: true, mom: ['A', 'C'], nota: 'Estimada con IA el 25/10.' },
+      { id: 'arroz', nombre: 'Arroz blanco cocido', porcion: '½ plato playo (1 taza)', carb: 42, tipo: 'acomp', mp: true, mom: ['A', 'C'] },
+      { id: 'batata', nombre: 'Batata al horno', porcion: '1 batata chica', carb: 25, tipo: 'acomp', f: true, mp: true, mom: ['A', 'C'] },
+      { id: 'hoja', nombre: 'Ensalada de hoja (lechuga, rúcula, tomate)', porcion: '1 plato playo', carb: 3, tipo: 'acomp', mom: ['A', 'C'] },
+      { id: 'lactal', nombre: 'Pan lactal integral', porcion: '1 rebanada', carb: 12, tipo: 'desayuno', mom: ['D', 'M'] },
+      { id: 'yogur', nombre: 'Yogur natural o sin azúcar', porcion: '1 pote', carb: 8, tipo: 'desayuno', mom: ['D', 'M', 'Col'] },
+      { id: 'galletas', nombre: 'Galletitas de agua', porcion: '3 unidades', carb: 15, tipo: 'desayuno', mom: ['D', 'M', 'Col'] },
+      { id: 'manzana', nombre: 'Manzana', porcion: '1 mediana', carb: 15, tipo: 'fruta', f: true, mom: ['D', 'M', 'Col', 'A', 'C'] },
+      { id: 'banana', nombre: 'Banana', porcion: '1 mediana', carb: 25, tipo: 'fruta', mom: ['D', 'M', 'Col', 'A', 'C'] },
+      { id: 'cafe', nombre: 'Café solo con edulcorante', porcion: '1 taza', carb: 0, tipo: 'bebida', mom: ['D', 'M'] },
+      { id: 'helado', nombre: 'Helado', porcion: '1 bocha', carb: 18, tipo: 'extra', mom: ['A', 'C'] },
+      { id: 'mani', nombre: 'Maní tostado del kiosco', porcion: '1 paquete chico', carb: 7, tipo: 'extra', g: true, nv: true, mom: ['Col'], nota: 'Estimada con IA el 22/10.' }
+    ];
+    const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+    const q = norm(this.state.busqueda.trim());
+    const F = {}; ['todas','principal','acomp','desayuno','fruta','bebida','extra','nv'].forEach(id => {
+      const k = id.charAt(0).toUpperCase() + id.slice(1);
+      F['f' + k] = filtro === id ? 'on' : ''; F['fn' + k] = () => this.setState({ filtro: id });
+    });
+    const lista = piezas.filter(p => filtro === 'todas' || (filtro === 'nv' ? p.nv : p.tipo === filtro))
+      .filter(p => !q || norm(p.nombre).includes(q))
+      .map(p => Object.assign({}, p, { f: !!p.f, g: !!p.g, mp: !!p.mp, nv: !!p.nv, abrir: () => this.setState({ hoja: p.id }) }));
+    const nv = piezas.filter(p => p.nv).length;
+    const hoja = !!hojaId;
+    const base = hoja && hojaId !== 'nueva' ? piezas.find(p => p.id === hojaId) : null;
+    const e = base || { nombre: '', porcion: '', carb: 0, tipo: 'principal', mom: [], nota: '' };
+    const ed = {
+      existente: !!base, nombre: e.nombre, porcion: e.porcion, carb: e.carb, nota: e.nota || '', nv: !!e.nv,
+      tipos: TIPOS.map(t => ({ nombre: t.nombre, on: t.id === e.tipo ? 'on' : '' })),
+      momentos: MOM.map(m => ({ nombre: m[1], on: e.mom.includes(m[0]) ? 'on' : '', pressed: e.mom.includes(m[0]) })),
+      f: !!e.f, g: !!e.g, mp: !!e.mp, trae: !!e.trae, val: !!base && !e.nv,
+      fOn: e.f ? 'on' : '', gOn: e.g ? 'on' : '', mpOn: e.mp ? 'on' : '', traeOn: e.trae ? 'on' : '', valOn: (!!base && !e.nv) ? 'on' : ''
+    };
+    return Object.assign(F, {
+      temaClass: dark ? 'oscuro' : '',
+      resumen: '96 piezas · ' + nv + ' sin validar',
+      busqueda: this.state.busqueda, escribir: (ev) => this.setState({ busqueda: ev.target.value }), focoBusqueda: q ? 'focus' : '',
+      lista, sinResultados: lista.length === 0,
+      nueva: () => this.setState({ hoja: 'nueva' }),
+      hoja, hojaTitulo: base ? 'Editar pieza' : 'Nueva pieza', ed,
+      cerrarHoja: () => this.setState({ hoja: '' })
+    });
+  }
+}
+</script>
+</body>
+</html>

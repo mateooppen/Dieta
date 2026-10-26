@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Propuesta del día</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+body{margin:0}
+a{color:#3b7a5a}a:hover{color:#245240}
+.app{--surface:#f5f7f3;--raised:#ffffff;--sunken:#e9ede8;--ink:#1c261f;--muted:#5a6960;--line:#d6ddd6;--accent:#3b7a5a;--on-accent:#ffffff;--accent-soft:#e1eee6;--focus:#245240;--ok:#286b44;--ok-soft:#dff0e4;--over:#9a5310;--over-soft:#faeddb;--under:#476a8a;--under-soft:#e2eaf2;--fibra:#53742a;--fibra-soft:#e7efd8;--grasa:#7a4d72;--grasa-soft:#f1e4ee;--overlay:#1c261f99;--shadow-card:0 1px 2px #1c261f14;--shadow-bar:0 -2px 12px #1c261f14}
+.app.oscuro{--surface:#141a16;--raised:#1e2621;--sunken:#0e1310;--ink:#edf1ec;--muted:#a4b0a8;--line:#33403a;--accent:#86bf9d;--on-accent:#0f2118;--accent-soft:#243a2f;--focus:#b7dcc6;--ok:#8ccaa4;--ok-soft:#1f3a2b;--over:#e8a862;--over-soft:#3f2d1b;--under:#93b8da;--under-soft:#1f2e3c;--fibra:#aacb70;--fibra-soft:#2a3620;--grasa:#cf9fc7;--grasa-soft:#372a35;--overlay:#00000099;--shadow-card:0 1px 2px #00000066;--shadow-bar:0 -2px 12px #00000080}
+.app{font-family:"Atkinson Hyperlegible","Segoe UI",Roboto,system-ui,sans-serif;font-size:17px;line-height:24px;color:var(--ink);background:var(--surface)}
+.app *{box-sizing:border-box}
+.app button{font:inherit;cursor:pointer}
+.app button:focus-visible,.app a:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+.chip{display:inline-flex;align-items:center;height:32px;padding:0 12px;border-radius:999px;font-size:15px;line-height:20px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.chip.ok{color:var(--ok);background:var(--ok-soft)}.chip.over{color:var(--over);background:var(--over-soft)}.chip.under{color:var(--under);background:var(--under-soft)}
+.badge{display:inline-flex;align-items:center;height:26px;padding:0 8px;border-radius:8px;font-size:15px;line-height:20px;font-weight:700;letter-spacing:.04em;border:1.5px solid transparent;white-space:nowrap}
+.badge.f{color:var(--fibra);background:var(--fibra-soft);border-color:var(--fibra)}.badge.g{color:var(--grasa);background:var(--grasa-soft);border-color:var(--grasa)}
+.rol{font-size:15px;line-height:20px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.mom{flex:none;height:44px;padding:0 14px;border-radius:999px;font-weight:700;background:var(--raised);color:var(--ink);border:1.5px solid var(--line)}
+.mom.on{background:var(--accent-soft);border:2px solid var(--accent)}
+.ic{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;font-weight:700;border:1.5px solid transparent}
+.btn.primary{height:56px;flex:1;min-width:0;background:var(--accent);color:var(--on-accent)}
+.btn.primary.done{background:var(--ok-soft);color:var(--ok);border-color:var(--ok)}
+.btn.secondary{height:48px;padding:0 16px;background:var(--raised);color:var(--ink);border-color:var(--line)}
+.btn.ghost{height:44px;padding:0 10px;background:transparent;color:var(--accent)}
+.iconbtn{width:44px;height:44px;border-radius:14px;border:1.5px solid var(--line);background:var(--raised);color:var(--muted);display:inline-flex;align-items:center;justify-content:center}
+.fila{width:100%;text-align:left;display:flex;align-items:center;gap:10px;padding:8px 0;border:0;border-top:1px solid var(--line);background:transparent;color:var(--ink);min-height:56px}
+.fila .txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:0}
+.fila .nombre{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.fila .vacio{color:var(--muted)}
+.fila .chev{color:var(--muted);flex:none;width:20px;height:20px}
+.alt{width:100%;text-align:left;display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:14px;background:var(--raised);color:var(--ink);border:1.5px solid var(--line)}
+.alt .txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+</style>
+</helmet>
+<div class="app {{temaClass}}" style="width: 390px; height: 844px; position: relative; overflow: hidden; display: flex; flex-direction: column;">
+
+  <div style="flex: 1; min-height: 0; overflow: hidden; padding: 16px 16px 0; display: flex; flex-direction: column; gap: 14px;">
+
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="font-size: 24px; line-height: 30px; font-weight: 700;">Hoy</span>
+        <span style="font-size: 15px; line-height: 20px; color: var(--muted);">sábado 24 de octubre</span>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <a href="Piezas.dc.html" class="iconbtn" aria-label="Mis piezas" style="text-decoration: none;">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width: 22px; height: 22px;"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+        </a>
+        <button class="iconbtn" onClick="{{toggleTema}}" aria-label="Cambiar tema claro u oscuro">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width: 22px; height: 22px;"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div role="group" aria-label="Momento del día" style="display: flex; gap: 8px; overflow-x: auto; margin: 0 -16px; padding: 0 16px 2px;">
+      <button class="mom">Desayuno</button>
+      <button class="mom on" aria-pressed="true">Almuerzo</button>
+      <button class="mom">Merienda</button>
+      <button class="mom">Cena</button>
+      <button class="mom">Colación</button>
+    </div>
+
+    <div style="background: var(--raised); border-radius: 22px; box-shadow: var(--shadow-card); padding: 16px 16px 8px; display: flex; flex-direction: column; gap: 4px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+        <span style="font-size: 24px; line-height: 30px; font-weight: 700;">Almuerzo</span>
+        <span class="chip {{estado}}">{{estadoTexto}}</span>
+      </div>
+      <div style="display: flex; align-items: baseline; gap: 12px; margin: 6px 0 10px;">
+        <span class="num" style="font-size: 56px; line-height: 60px; font-weight: 700; letter-spacing: -0.02em;">{{total}}<span style="font-size: 19px; color: var(--muted); letter-spacing: 0; margin-left: 4px;">g</span></span>
+        <span style="color: var(--muted); font-size: 15px; line-height: 20px;">rango 50–60 g</span>
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <sc-for list="{{slots}}" as="s" hint-placeholder-count="4">
+          <button class="fila" onClick="{{s.abrir}}" aria-label="Cambiar {{s.rol}}">
+            <span class="txt">
+              <span class="rol">{{s.rol}}</span>
+              <span class="nombre"><span class="{{s.claseNombre}}">{{s.nombre}}</span><sc-if value="{{s.f}}" hint-placeholder-val="{{false}}"><span class="badge f">Fibra</span></sc-if><sc-if value="{{s.g}}" hint-placeholder-val="{{false}}"><span class="badge g">Grasa</span></sc-if></span>
+            </span>
+            <b class="num" style="flex: none; font-size: 19px;">{{s.carbTexto}}</b>
+            <svg class="chev" viewBox="0 0 24 24" aria-hidden="true" style="stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;"><path d="m9 6 6 6-6 6"/></svg>
+          </button>
+        </sc-for>
+      </div>
+      <button class="btn ghost" onClick="{{otroPlato}}" style="align-self: flex-start; margin-left: -10px;">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width: 20px; height: 20px;"><path d="M3 7h4l10 10h4M3 17h4l3-3m4-4 3-3h4"/><path d="m18 4 3 3-3 3m0 4 3 3-3 3"/></svg>
+        Proponer otro plato
+      </button>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 4px; padding: 0 4px;">
+      <span class="rol">Para tener a mano</span>
+      <span style="color: var(--muted); font-size: 15px; line-height: 20px;">{{tip}}</span>
+    </div>
+
+  </div>
+
+  <div style="display: flex; align-items: center; gap: 8px; padding: 12px 16px 28px; background: var(--raised); box-shadow: var(--shadow-bar); border-radius: 22px 22px 0 0;">
+    <a href="OtraComida.dc.html" class="btn secondary" style="text-decoration: none;">Otra comida</a>
+    <button class="btn primary {{doneClass}}" onClick="{{confirmar}}">{{textoConfirmar}}</button>
+  </div>
+
+  <sc-if value="{{hoja}}" hint-placeholder-val="{{false}}">
+    <div style="position: absolute; inset: 0; background: var(--overlay); display: flex; flex-direction: column; justify-content: flex-end;">
+      <button onClick="{{cerrarHoja}}" aria-label="Cerrar" style="flex: 1; border: 0; background: transparent; cursor: pointer;"></button>
+      <div style="background: var(--surface); border-radius: 22px 22px 0 0; padding: 12px 16px 28px; display: flex; flex-direction: column; gap: 12px; max-height: 92%;">
+        <div style="width: 40px; height: 4px; border-radius: 999px; background: var(--line); align-self: center;"></div>
+        <div style="display: flex; align-items: center; gap: 10px;"><span style="font-size: 24px; line-height: 30px; font-weight: 700; flex: 1;">{{hojaTitulo}}</span><button class="iconbtn" onClick="{{cerrarHoja}}" aria-label="Cerrar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width: 20px; height: 20px;"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+        <span style="color: var(--muted);">{{hojaSub}}</span>
+        <div style="display: flex; flex-direction: column; gap: 12px; overflow-y: auto; padding-bottom: 4px;">
+          <sc-for list="{{alternativas}}" as="a" hint-placeholder-count="4">
+            <button class="alt" onClick="{{a.elegir}}">
+              <span class="txt">
+                <span style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;"><span style="font-weight: 700; font-size: 19px; line-height: 24px;">{{a.nombre}}</span><sc-if value="{{a.f}}" hint-placeholder-val="{{false}}"><span class="badge f">Fibra</span></sc-if><sc-if value="{{a.g}}" hint-placeholder-val="{{false}}"><span class="badge g">Grasa</span></sc-if></span>
+                <span style="color: var(--muted);">{{a.porcion}}</span>
+                <span class="num" style="display: flex; align-items: center; gap: 8px; margin-top: 4px;"><span style="color: var(--muted);">El plato queda en <b style="color: var(--ink);">{{a.totalNuevo}} g</b></span><span class="chip {{a.estado}}" style="height: 26px; font-size: 13px;">{{a.estadoTexto}}</span></span>
+              </span>
+              <b class="num" style="flex: none; font-size: 32px; line-height: 36px; letter-spacing: -0.01em;">{{a.carb}}<span style="font-size: 17px; font-weight: 400; color: var(--muted); letter-spacing: 0;"> g</span></b>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"temaInicial":{"editor":"enum","options":["claro","oscuro"],"default":"claro","section":"Vista"},"hojaAbierta":{"editor":"int","default":-1,"min":-1,"max":3,"section":"Vista"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { dark: null, hoja: null, plato: 0, cambios: {}, confirmado: false };
+  }
+  renderVals() {
+    const dark = this.state.dark === null ? (this.props.temaInicial ?? 'claro') === 'oscuro' : this.state.dark;
+    const hojaIdx = this.state.hoja === null ? Number(this.props.hojaAbierta ?? -1) : this.state.hoja;
+    const min = 50, max = 60;
+    const P = {
+      principal: [
+        { id: 'mila', nombre: 'Milanesa de pollo', porcion: '1 unidad mediana', carb: 15, g: true, nota: 'milanesas hechas y congeladas' },
+        { id: 'pollo', nombre: 'Pollo a la plancha', porcion: '1 pechuga o 2 muslos', carb: 0, nota: 'pollo al horno del domingo rinde 3 días' },
+        { id: 'hamb', nombre: 'Hamburguesa casera', porcion: '1 unidad, sin pan', carb: 2, g: true, nota: 'hamburguesas armadas y congeladas' },
+        { id: 'tort', nombre: 'Tortilla de verduras', porcion: '¼ de tortilla', carb: 5, g: true, nota: 'una tortilla entera dura 2 días en la heladera' },
+        { id: 'wok', nombre: 'Wok de pollo con verduras', porcion: '1 plato playo', carb: 10, f: true, nota: 'verduras ya cortadas' },
+        { id: 'tarta', nombre: 'Tarta de verduras', porcion: '1 porción', carb: 20, g: true, nota: 'tarta hecha, se come fría o tibia' },
+        { id: 'pastel', nombre: 'Pastel de papa', porcion: '1 cuadrado de 10×10', carb: 35, g: true, nota: 'pastel en porciones, freezer' },
+        { id: 'guiso', nombre: 'Guiso de lentejas', porcion: '1 plato hondo', carb: 45, f: true, nota: 'guiso en porciones, freezer' }
+      ],
+      acomp: [
+        { id: 'arroz', nombre: 'Arroz blanco', porcion: '½ plato playo (1 taza)', carb: 42, nota: 'arroz cocido del domingo' },
+        { id: 'fideos', nombre: 'Fideos solos', porcion: '½ plato playo', carb: 40 },
+        { id: 'arrozi', nombre: 'Arroz integral', porcion: '½ plato playo (1 taza)', carb: 35, nota: 'arroz integral cocido, dura 4 días' },
+        { id: 'pure', nombre: 'Puré de papa', porcion: '½ plato playo (1 taza)', carb: 35, nota: 'puré hecho' },
+        { id: 'papa', nombre: 'Papa al horno', porcion: '1 papa mediana', carb: 25, nota: 'papas al horno hechas' },
+        { id: 'batata', nombre: 'Batata al horno', porcion: '1 batata chica', carb: 25, f: true, nota: 'batatas al horno hechas' },
+        { id: 'garb', nombre: 'Garbanzos cocidos', porcion: '½ taza', carb: 22, f: true, nota: 'garbanzos cocidos o de lata' },
+        { id: 'zapallo', nombre: 'Puré de zapallo', porcion: '½ plato playo', carb: 15, nota: 'puré de zapallo hecho' }
+      ],
+      verdura: [
+        { id: 'hoja', nombre: 'Ensalada de hoja', porcion: '1 plato playo', carb: 3 },
+        { id: 'tomate', nombre: 'Ensalada de tomate', porcion: '1 tomate mediano', carb: 4 },
+        { id: 'mixta', nombre: 'Ensalada mixta', porcion: '½ plato playo', carb: 5 },
+        { id: 'brocoli', nombre: 'Brócoli al vapor', porcion: '½ plato playo', carb: 5, f: true, nota: 'brócoli cocido' },
+        { id: 'horno', nombre: 'Verduras al horno', porcion: '½ plato playo', carb: 8, f: true, nota: 'verduras al horno hechas' }
+      ],
+      postre: [
+        { id: 'gelatina', nombre: 'Gelatina sin azúcar', porcion: '1 pote', carb: 0 },
+        { id: 'frutillas', nombre: 'Frutillas', porcion: '1 taza', carb: 10 },
+        { id: 'mandarina', nombre: 'Mandarina', porcion: '1 mediana', carb: 10 },
+        { id: 'manzana', nombre: 'Manzana', porcion: '1 mediana', carb: 15, f: true },
+        { id: 'helado', nombre: 'Helado', porcion: '1 bocha', carb: 18 },
+        { id: 'flan', nombre: 'Flan casero', porcion: '1 porción', carb: 20 }
+      ]
+    };
+    const tipos = ['principal', 'acomp', 'verdura', 'postre'];
+    const ROL = { principal: 'Principal', acomp: 'Acompañamiento', verdura: 'Verdura', postre: 'Postre' };
+    const SIN = { acomp: 'Sin acompañamiento', verdura: 'Sin verdura', postre: 'Sin postre' };
+    const platos = [
+      ['mila', 'arroz', 'hoja', 'gelatina'],
+      ['wok', 'papa', 'horno', 'manzana'],
+      ['guiso', null, 'tomate', 'frutillas'],
+      ['tort', 'arrozi', 'mixta', 'helado']
+    ];
+    const base = platos[this.state.plato];
+    const ids = tipos.map((t, i) => (i in this.state.cambios) ? this.state.cambios[i] : base[i]);
+    const piezas = tipos.map((t, i) => ids[i] ? P[t].find(p => p.id === ids[i]) : null);
+    const total = piezas.reduce((s, p) => s + (p ? p.carb : 0), 0);
+    const estadoDe = (n) => n > max ? 'over' : (n < min ? 'under' : 'ok');
+    const TXT = { ok: 'En rango', over: 'Por encima', under: 'Por debajo' };
+    const slots = piezas.map((p, i) => ({
+      rol: ROL[tipos[i]],
+      nombre: p ? p.nombre : SIN[tipos[i]],
+      claseNombre: p ? '' : 'vacio',
+      carbTexto: p ? p.carb + ' g' : '—',
+      f: !!(p && p.f), g: !!(p && p.g),
+      abrir: () => this.setState({ hoja: i })
+    }));
+    const notas = piezas.filter(p => p && p.nota).map(p => p.nota);
+    const tip = notas.length ? notas.map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' · ') + '.' : 'Nada que preparar de antes.';
+    const hoja = hojaIdx >= 0 && hojaIdx < 4;
+    let alternativas = [], hojaTitulo = '', hojaSub = '';
+    if (hoja) {
+      const t = tipos[hojaIdx], actual = piezas[hojaIdx], carbActual = actual ? actual.carb : 0;
+      hojaTitulo = 'Cambiar ' + ROL[t].toLowerCase();
+      hojaSub = (actual ? 'Ahora: ' + actual.nombre + ' (' + carbActual + ' g). ' : 'Ahora sin ' + ROL[t].toLowerCase() + '. ') + 'El total se recalcula con cada opción.';
+      const elegir = (id) => () => this.setState({ cambios: Object.assign({}, this.state.cambios, { [hojaIdx]: id }), hoja: -1, confirmado: false });
+      alternativas = P[t].filter(p => !actual || p.id !== actual.id).map(p => {
+        const totalNuevo = total - carbActual + p.carb, e = estadoDe(totalNuevo);
+        return { nombre: p.nombre, porcion: p.porcion, carb: p.carb, f: !!p.f, g: !!p.g, totalNuevo, estado: e, estadoTexto: TXT[e], dist: Math.abs(p.carb - carbActual), elegir: elegir(p.id) };
+      }).sort((a, b) => a.dist - b.dist);
+      if (t !== 'principal' && actual) {
+        const totalNuevo = total - carbActual, e = estadoDe(totalNuevo);
+        alternativas.unshift({ nombre: SIN[t], porcion: 'Dejar este lugar vacío', carb: 0, f: false, g: false, totalNuevo, estado: e, estadoTexto: TXT[e], elegir: elegir(null) });
+      }
+    }
+    const estado = estadoDe(total);
+    return {
+      temaClass: dark ? 'oscuro' : '',
+      toggleTema: () => this.setState({ dark: !dark }),
+      hoja, hojaTitulo, hojaSub, alternativas,
+      cerrarHoja: () => this.setState({ hoja: -1 }),
+      otroPlato: () => this.setState({ plato: (this.state.plato + 1) % platos.length, cambios: {}, confirmado: false }),
+      confirmar: () => this.setState({ confirmado: true }),
+      doneClass: this.state.confirmado ? 'done' : '',
+      textoConfirmar: this.state.confirmado ? 'Guardado en el historial' : 'Voy a comer esto',
+      total, estado, estadoTexto: TXT[estado],
+      slots, tip
+    };
+  }
+}
+</script>
+</body>
+</html>

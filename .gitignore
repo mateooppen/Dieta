@@ -1,0 +1,22 @@
+# Dependencias y salida de compilación
+node_modules
+dist
+dist-ssr
+*.local
+
+# Registros
+logs
+*.log
+npm-debug.log*
+
+# Editores y sistema
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+Thumbs.db
+*.sw?
+
+# Claves y secretos: nunca en el repositorio
+.env
+.env.*
