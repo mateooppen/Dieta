@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'preact/hooks'
 import { useDieta } from '../datos/almacen.ts'
 import { momentoPorId } from '../datos/piezas.ts'
 import { cargarPlatoActual, fechaCorta, guardarPlatoActual } from '../datos/platoActual.ts'
+import { useSincronizacion } from '../datos/sincronizacion.ts'
 import { BarraAcciones } from '../componentes/BarraAcciones.tsx'
 import { Boton } from '../componentes/Boton.tsx'
 import { BotonIcono } from '../componentes/BotonIcono.tsx'
@@ -37,6 +38,9 @@ function depositoLocal(): Storage | null {
 /** Pantalla principal: propone qué comer ahora y deja ajustarlo pieza por pieza. */
 export function Hoy() {
   const [dieta, cambiarDieta] = useDieta()
+  const sync = useSincronizacion()
+  // Sin Drive conectado (o con la sesión vencida) se marca el ícono de Ajustes con un punto.
+  const pendienteGoogle = sync.estado === 'sin-sesion' || sync.estado === 'sesion-vencida'
   const [momentoId, setMomentoId] = useState<MomentoId>(() => momentoPorHora(new Date()))
 
   /** Plato nuevo al azar para el momento, ya recordado para el resto del día. */
@@ -112,8 +116,13 @@ export function Hoy() {
             <Enlace href="/piezas" class="boton-icono" aria-label="Mis piezas">
               <Icono nombre="lista" tamano={22} />
             </Enlace>
-            <Enlace href="/ajustes" class="boton-icono" aria-label="Ajustes">
+            <Enlace
+              href="/ajustes"
+              class="boton-icono hoy__ajustes"
+              aria-label={pendienteGoogle ? 'Ajustes: falta conectar Google Drive' : 'Ajustes'}
+            >
               <Icono nombre="ajustes" tamano={22} />
+              {pendienteGoogle && <span class="hoy__pendiente" aria-hidden="true" />}
             </Enlace>
             <BotonIcono icono={oscuro ? 'sol' : 'luna'} etiqueta={oscuro ? 'Pasar a modo claro' : 'Pasar a modo oscuro'} alTocar={alternarTema} />
           </div>

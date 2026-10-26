@@ -52,6 +52,22 @@
   gap: var(--space-2);
 }
 
+/* Punto ámbar sobre Ajustes cuando falta conectar Google Drive. */
+.hoy__ajustes {
+  position: relative;
+}
+
+.hoy__pendiente {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-pill);
+  background: var(--state-over);
+  border: 2px solid var(--surface);
+}
+
 .hoy__tip {
   display: flex;
   flex-direction: column;
