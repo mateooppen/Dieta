@@ -7,14 +7,19 @@
   margin: 0 auto;
 }
 
+/* Entra sin desplazamiento en 390×844; si la pantalla es más baja (barra del navegador), se desplaza. */
 .hoy__contenido {
   flex: 1;
   min-height: 0;
-  overflow: hidden;
-  padding: var(--space-4) var(--space-4) 0;
+  overflow-y: auto;
+  padding: var(--space-4) var(--space-4) var(--space-4);
   display: flex;
   flex-direction: column;
   gap: 14px;
+}
+
+.hoy__contenido > * {
+  flex: none;
 }
 
 .hoy__encabezado {
@@ -52,8 +57,6 @@
   flex-direction: column;
   gap: var(--space-1);
   padding: 0 var(--space-1);
-  min-height: 0;
-  overflow: hidden;
 }
 
 .hoy__tip-titulo {
@@ -63,10 +66,6 @@
 
 .hoy__tip-texto {
   color: var(--ink-muted);
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 .hoy__sin-opciones {

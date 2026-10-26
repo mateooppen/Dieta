@@ -2,6 +2,7 @@ import './Hoy.css'
 import { useEffect, useMemo, useState } from 'preact/hooks'
 import { useDieta } from '../datos/almacen.ts'
 import { momentoPorId } from '../datos/piezas.ts'
+import { cargarPlatoActual, fechaCorta, guardarPlatoActual } from '../datos/platoActual.ts'
 import { BarraAcciones } from '../componentes/BarraAcciones.tsx'
 import { Boton } from '../componentes/Boton.tsx'
 import { BotonIcono } from '../componentes/BotonIcono.tsx'
@@ -25,28 +26,58 @@ function sistemaOscuro(): boolean {
   return typeof matchMedia !== 'undefined' && matchMedia('(prefers-color-scheme: dark)').matches
 }
 
+function depositoLocal(): Storage | null {
+  try {
+    return typeof localStorage === 'undefined' ? null : localStorage
+  } catch {
+    return null
+  }
+}
+
 /** Pantalla principal: propone qué comer ahora y deja ajustarlo pieza por pieza. */
 export function Hoy() {
   const [dieta, cambiarDieta] = useDieta()
   const [momentoId, setMomentoId] = useState<MomentoId>(() => momentoPorHora(new Date()))
-  const [plato, setPlato] = useState<Plato>(() => platoVacio(momentoId))
+
+  /** Plato nuevo al azar para el momento, ya recordado para el resto del día. */
+  const proponerYRecordar = (id: MomentoId): Plato => {
+    const propuesta = proponerPlato(dieta.piezas, momentoPorId(id), dieta.historial)
+    const nuevo = propuesta ? propuesta.plato : platoVacio(id)
+    guardarPlatoActual(depositoLocal(), nuevo, fechaCorta(new Date()))
+    return nuevo
+  }
+
+  /** El plato de hoy para ese momento si ya había uno; si no, se propone uno nuevo. */
+  const platoParaMomento = (id: MomentoId): Plato =>
+    cargarPlatoActual(depositoLocal(), id, dieta.piezas, fechaCorta(new Date())) ?? proponerYRecordar(id)
+
+  const [plato, setPlato] = useState<Plato>(() => platoParaMomento(momentoId))
   const [guardado, setGuardado] = useState(false)
   const [rolAbierto, setRolAbierto] = useState<Rol | null>(null)
 
   const momento = momentoPorId(momentoId)
 
+  /** Cambia el plato mostrado y lo recuerda para el resto del día. */
+  const mostrar = (nuevo: Plato) => {
+    setPlato(nuevo)
+    setGuardado(false)
+    guardarPlatoActual(depositoLocal(), nuevo, fechaCorta(new Date()))
+  }
+
+  /** Solo al tocar "Proponer otro plato". */
   const proponer = (id: MomentoId) => {
-    const propuesta = proponerPlato(dieta.piezas, momentoPorId(id), dieta.historial)
-    setPlato(propuesta ? propuesta.plato : platoVacio(id))
+    setPlato(proponerYRecordar(id))
     setGuardado(false)
   }
 
-  // Al abrir y al cambiar de momento se propone un plato nuevo.
-  useEffect(() => proponer(momentoId), [momentoId])
+  // Al cambiar de momento se muestra el plato de hoy para ese momento (o se propone uno si no había).
+  useEffect(() => {
+    setPlato(platoParaMomento(momentoId))
+    setGuardado(false)
+  }, [momentoId])
 
   const elegirPieza = (rol: Rol, pieza: Plato['lugares'][number]['pieza']) => {
-    setPlato((actual) => conPieza(actual, rol, pieza))
-    setGuardado(false)
+    mostrar(conPieza(plato, rol, pieza))
     setRolAbierto(null)
   }
 
