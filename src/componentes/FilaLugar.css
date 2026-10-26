@@ -35,6 +35,10 @@
   color: var(--ink-muted);
 }
 
+.fila-lugar__porcion {
+  color: var(--ink-muted);
+}
+
 .fila-lugar__carb {
   flex: none;
 }

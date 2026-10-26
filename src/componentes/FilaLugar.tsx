@@ -20,6 +20,7 @@ export function FilaLugar({ lugar, alTocar }: Props) {
         <span class="label fila-lugar__rol">{nombreRol}</span>
         <span class="fila-lugar__nombre">
           <span class={`body ${pieza ? '' : 'fila-lugar__vacio'}`}>{pieza ? pieza.nombre : `Sin ${nombreRol.toLowerCase()}`}</span>
+          {pieza?.porcion && <span class="meta fila-lugar__porcion">{pieza.porcion}</span>}
           {pieza && badgesDePieza(pieza).filter((b) => b.tono === 'fibra' || b.tono === 'grasa').map((b) => <Badge key={b.texto} {...b} />)}
         </span>
       </span>

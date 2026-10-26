@@ -78,6 +78,7 @@ export function OtraComida() {
               <div class="otra__elegida" key={`${p.id}-${i}`}>
                 <span class="otra__elegida-nombre">
                   <span class="body">{p.nombre}</span>
+                  {p.porcion && <span class="meta texto-apagado">{p.porcion}</span>}
                   {badgesDePieza(p)
                     .filter((b) => b.tono !== 'neutro')
                     .map((b) => (
