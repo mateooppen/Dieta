@@ -9,6 +9,11 @@ const TRAZOS = {
   mezclar: 'M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H22M18 2l4 4-4 4M2 6h1.9c1.5 0 2.9.9 3.6 2.2M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8M18 14l4 4-4 4',
   cerrar: 'M18 6 6 18M6 6l12 12',
   volver: 'm12 19-7-7 7-7M19 12H5',
+  atras: 'm15 6-6 6 6 6',
+  buscar: 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm9 16-4-4',
+  mas: 'M12 5v14M5 12h14',
+  chispas: 'M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 17l.7 1.8 1.8.7-1.8.7L19 22l-.7-1.8-1.8-.7 1.8-.7z',
+  tilde: 'm5 12 5 5L20 7',
 } as const
 
 export type NombreIcono = keyof typeof TRAZOS

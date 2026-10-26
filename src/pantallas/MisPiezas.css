@@ -1,0 +1,13 @@
+.mis-piezas {
+  gap: 14px;
+}
+
+.mis-piezas__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mis-piezas__vacio {
+  padding: var(--space-2) 0;
+}

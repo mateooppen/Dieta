@@ -130,7 +130,7 @@ export function Hoy() {
       </div>
 
       <BarraAcciones>
-        <Enlace href="/otra" class="boton boton--secundario body-strong">
+        <Enlace href={`/otra?momento=${momentoId}`} class="boton boton--secundario body-strong">
           Otra comida
         </Enlace>
         <Boton tipo="primario" hecho={guardado} deshabilitado={guardado} alTocar={confirmar}>

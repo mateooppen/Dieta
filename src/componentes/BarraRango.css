@@ -1,0 +1,32 @@
+.barra-rango {
+  position: relative;
+  height: 12px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken);
+  overflow: hidden;
+}
+
+.barra-rango__zona {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--accent-soft);
+}
+
+.barra-rango__relleno {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: var(--radius-pill);
+  background: var(--state-ok);
+  transition: width 0.2s ease-out;
+}
+
+.barra-rango__relleno--over {
+  background: var(--state-over);
+}
+
+.barra-rango__relleno--under {
+  background: var(--state-under);
+}

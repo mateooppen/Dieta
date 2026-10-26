@@ -1,0 +1,19 @@
+.encabezado {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.encabezado__textos {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.encabezado__titulo {
+  margin: 0;
+}
+
+.encabezado__subtitulo {
+  color: var(--ink-muted);
+}

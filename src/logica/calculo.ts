@@ -31,6 +31,25 @@ export const TEXTO_ESTADO: Record<Estado, string> = {
   under: 'Por debajo',
 }
 
+export interface BarraRango {
+  /** Porcentaje de la barra que ocupa el total (0 a 100). */
+  relleno: number
+  /** Dónde empieza y cuánto mide la zona del rango, en porcentaje. */
+  zonaInicio: number
+  zonaAncho: number
+}
+
+/** Medidas de la barra de rango: la escala llega a un 30 % más que el máximo, para que se vea el exceso. */
+export function barraRango(total: number, rango: Rango): BarraRango {
+  const escala = Math.round(rango.carbMax * 1.3)
+  const pct = (n: number) => Math.min(100, Math.max(0, Math.round((n / escala) * 100)))
+  return {
+    relleno: pct(total),
+    zonaInicio: pct(rango.carbMin),
+    zonaAncho: pct(rango.carbMax) - pct(rango.carbMin),
+  }
+}
+
 export function piezasDelPlato(plato: Plato): Pieza[] {
   return plato.lugares.map((l) => l.pieza).filter((p): p is Pieza => p !== null)
 }

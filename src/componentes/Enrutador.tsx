@@ -15,6 +15,11 @@ export function caminoActual(): string {
   return sinBase === '' ? '/' : sinBase.replace(/\/$/, '') || '/'
 }
 
+/** Valor de un parámetro de la dirección actual (?momento=cena), o null. */
+export function parametroActual(nombre: string): string | null {
+  return new URLSearchParams(location.search).get(nombre)
+}
+
 /** Navega sin recargar la página. */
 export function irA(camino: string): void {
   history.pushState(null, '', BASE + camino)
@@ -44,5 +49,6 @@ export function Enrutador({ rutas, porDefecto }: { rutas: Ruta[]; porDefecto: Co
     return () => removeEventListener('popstate', alCambiar)
   }, [])
   const Pantalla = rutas.find((r) => r.camino === camino)?.pantalla ?? porDefecto
-  return <Pantalla />
+  // La clave hace que cada pantalla arranque de cero al cambiar de ruta.
+  return <Pantalla key={camino} />
 }

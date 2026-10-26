@@ -1,0 +1,43 @@
+.tarjeta-pieza {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 64px;
+  padding: 10px var(--space-4);
+  background: var(--surface-raised);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  color: var(--ink);
+  text-align: left;
+}
+
+.tarjeta-pieza__texto {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tarjeta-pieza__porcion {
+  color: var(--ink-muted);
+}
+
+.tarjeta-pieza__badges {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.tarjeta-pieza__carb {
+  flex: none;
+}
+
+.tarjeta-pieza__unidad {
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--ink-muted);
+}
