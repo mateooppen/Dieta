@@ -96,6 +96,15 @@ describe('edición de piezas', () => {
 
     const sinNueva = eliminarPieza(editada, nueva.id)
     expect(sinNueva.piezas).toHaveLength(96)
+    expect(sinNueva.piezasBaseEliminadas).toEqual([])
+  })
+
+  it('eliminar una pieza base la anota para que no vuelva', () => {
+    const d = crearDietaInicial()
+    const sin = eliminarPieza(d, 'cerveza')
+    expect(sin.piezas.some((p) => p.id === 'cerveza')).toBe(false)
+    expect(sin.piezasBaseEliminadas).toEqual(['cerveza'])
+    expect(eliminarPieza(sin, 'cerveza').piezasBaseEliminadas).toEqual(['cerveza'])
   })
 
   it('el borrador de una pieza no comparte la lista de momentos', () => {

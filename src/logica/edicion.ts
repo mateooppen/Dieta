@@ -74,9 +74,11 @@ export function editarPieza(dieta: Dieta, id: string, b: Borrador): Dieta {
   }
 }
 
-/** Dieta sin esa pieza. El historial no se toca: guarda nombre y carbohidratos por su cuenta. */
+/** Dieta sin esa pieza. Si era de la tabla base, se anota para no volver a agregarla. El historial no se toca. */
 export function eliminarPieza(dieta: Dieta, id: string): Dieta {
-  return { ...dieta, piezas: dieta.piezas.filter((p) => p.id !== id) }
+  const pieza = dieta.piezas.find((p) => p.id === id)
+  const eliminadas = pieza?.origen === 'base' && !dieta.piezasBaseEliminadas.includes(id) ? [...dieta.piezasBaseEliminadas, id] : dieta.piezasBaseEliminadas
+  return { ...dieta, piezas: dieta.piezas.filter((p) => p.id !== id), piezasBaseEliminadas: eliminadas }
 }
 
 export function alternarMomento(momentos: MomentoId[], m: MomentoId): MomentoId[] {

@@ -38,6 +38,17 @@ describe('agregar piezas nuevas de una versión nueva de la app', () => {
     expect(agregarPiezasNuevas(d)).toEqual({ dieta: d, agregadas: 0 })
   })
 
+  it('no resucita una pieza base que el usuario eliminó', () => {
+    const d = crearDietaInicial()
+    const sinCerveza = { ...d, piezas: d.piezas.filter((p) => p.id !== 'cerveza'), piezasBaseEliminadas: ['cerveza'] }
+    const { dieta, agregadas } = agregarPiezasNuevas(sinCerveza)
+    expect(agregadas).toBe(0)
+    expect(dieta.piezas.some((p) => p.id === 'cerveza')).toBe(false)
+    const r = importarDieta(JSON.stringify(sinCerveza))
+    expect(r.ok && r.dieta.piezasBaseEliminadas).toEqual(['cerveza'])
+    expect(importarDieta({ piezas: [] }).ok && (importarDieta({ piezas: [] }) as { ok: true; dieta: { piezasBaseEliminadas: string[] } }).dieta.piezasBaseEliminadas).toEqual([])
+  })
+
   it('no reemplaza una pieza que el usuario eliminó y después creó con otro id', () => {
     const d = crearDietaInicial()
     const propia = pieza({ tipo: 'extra', carbohidratos: 12, id: 'mi-pieza', validada: false })

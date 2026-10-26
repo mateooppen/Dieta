@@ -80,4 +80,6 @@ export interface Dieta {
   piezas: Pieza[]
   historial: EntradaHistorial[]
   ajustes: Ajustes
+  /** Ids de piezas base que el usuario eliminó, para que una versión nueva de la app no las vuelva a agregar. */
+  piezasBaseEliminadas: string[]
 }

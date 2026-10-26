@@ -1,0 +1,81 @@
+.ajustes {
+  gap: var(--space-6);
+}
+
+.ajustes__seccion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background: var(--surface-raised);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.ajustes__titulo {
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.ajustes__acciones {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-top: var(--space-1);
+}
+
+.ajustes__acciones .boton--primario {
+  flex: 0 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.ajustes__clave {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.ajustes__entrada {
+  flex: 1;
+  min-width: 0;
+  height: var(--touch-min);
+  padding: 0 var(--space-3);
+  background: var(--surface-sunken);
+  border-radius: var(--radius-sm);
+  border: 2px solid transparent;
+  color: var(--ink);
+  outline: none;
+}
+
+.ajustes__entrada:focus {
+  border-color: var(--accent);
+}
+
+.ajustes__entrada::placeholder {
+  color: var(--ink-muted);
+}
+
+.ajustes__error {
+  color: var(--state-over);
+}
+
+.ajustes__ok {
+  color: var(--state-ok);
+}
+
+.ajustes__archivo {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ajustes__confirmar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--state-over-soft);
+}

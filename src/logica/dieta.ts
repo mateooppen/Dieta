@@ -19,13 +19,15 @@ export function crearDietaInicial(): Dieta {
     piezas: PIEZAS_BASE.map(copiarPieza),
     historial: [],
     ajustes: { ...AJUSTES_INICIALES },
+    piezasBaseEliminadas: [],
   }
 }
 
-/** Agrega a la dieta las piezas base que falten por id, sin tocar las existentes. */
+/** Agrega a la dieta las piezas base que falten por id, sin tocar las existentes ni resucitar las que el usuario eliminó. */
 export function agregarPiezasNuevas(dieta: Dieta, base: Pieza[] = PIEZAS_BASE): { dieta: Dieta; agregadas: number } {
   const existentes = new Set(dieta.piezas.map((p) => p.id))
-  const nuevas = base.filter((p) => !existentes.has(p.id)).map(copiarPieza)
+  const eliminadas = new Set(dieta.piezasBaseEliminadas)
+  const nuevas = base.filter((p) => !existentes.has(p.id) && !eliminadas.has(p.id)).map(copiarPieza)
   if (nuevas.length === 0) return { dieta, agregadas: 0 }
   return { dieta: { ...dieta, piezas: [...dieta.piezas, ...nuevas] }, agregadas: nuevas.length }
 }
@@ -115,5 +117,9 @@ export function importarDieta(entrada: unknown): ResultadoImportacion {
   const tema = a.tema === 'claro' || a.tema === 'oscuro' ? a.tema : 'sistema'
   const ajustes: Ajustes = { tema, claveIA: typeof a.claveIA === 'string' ? a.claveIA : '' }
 
-  return { ok: true, dieta: { version: VERSION_DIETA, piezas, historial, ajustes } }
+  const piezasBaseEliminadas = Array.isArray(datos.piezasBaseEliminadas)
+    ? datos.piezasBaseEliminadas.filter((x): x is string => typeof x === 'string')
+    : []
+
+  return { ok: true, dieta: { version: VERSION_DIETA, piezas, historial, ajustes, piezasBaseEliminadas } }
 }
