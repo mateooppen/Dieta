@@ -1,7 +1,11 @@
 import './OtraComida.css'
-import { useState } from 'preact/hooks'
+import { useEffect, useState } from 'preact/hooks'
 import { useDieta } from '../datos/almacen.ts'
+import { estimarCarbohidratos } from '../datos/ia.ts'
 import { MOMENTOS, momentoPorId } from '../datos/piezas.ts'
+import { TarjetaEstimacion } from '../componentes/TarjetaEstimacion.tsx'
+import { agregarPieza } from '../logica/edicion.ts'
+import { piezaDesdeEstimacion, piezaTemporal, type Estimacion } from '../logica/estimacion.ts'
 import { Badge } from '../componentes/Badge.tsx'
 import { BarraAcciones } from '../componentes/BarraAcciones.tsx'
 import { BarraRango } from '../componentes/BarraRango.tsx'
@@ -24,7 +28,22 @@ function momentoInicial(): MomentoId {
   return MOMENTOS.some((m) => m.id === pedido) ? (pedido as MomentoId) : momentoPorHora(new Date())
 }
 
-/** Armar a mano lo que se va a comer: buscar piezas y sumarlas. La estimación con IA llega en la fase 6. */
+/** True mientras el teléfono no tiene internet; se actualiza solo. */
+function useSinInternet(): boolean {
+  const [sin, setSin] = useState(() => typeof navigator !== 'undefined' && navigator.onLine === false)
+  useEffect(() => {
+    const actualizar = () => setSin(navigator.onLine === false)
+    addEventListener('online', actualizar)
+    addEventListener('offline', actualizar)
+    return () => {
+      removeEventListener('online', actualizar)
+      removeEventListener('offline', actualizar)
+    }
+  }, [])
+  return sin
+}
+
+/** Armar lo que se va a comer: buscar piezas y sumarlas, o describir la comida y estimarla con IA. */
 export function OtraComida() {
   const [dieta, cambiarDieta] = useDieta()
   const [momentoId] = useState(momentoInicial)
@@ -43,6 +62,46 @@ export function OtraComida() {
     setBusqueda('')
   }
   const quitar = (indice: number) => setElegidas((lista) => lista.filter((_, i) => i !== indice))
+
+  // Estimación con IA. Cambiar la descripción descarta la estimación anterior.
+  const sinInternet = useSinInternet()
+  const [estimacion, setEstimacion] = useState<Estimacion | null>(null)
+  const [idEstimacion, setIdEstimacion] = useState(0)
+  const [estimando, setEstimando] = useState(false)
+  const [errorEstimacion, setErrorEstimacion] = useState<string | null>(null)
+  const sinClave = dieta.ajustes.claveIA.trim() === ''
+  const puedeEstimar = !sinClave && !sinInternet && !estimando && descripcion.trim() !== ''
+
+  const cambiarDescripcion = (texto: string) => {
+    setDescripcion(texto)
+    setEstimacion(null)
+    setErrorEstimacion(null)
+  }
+
+  const estimar = async () => {
+    setEstimando(true)
+    setErrorEstimacion(null)
+    const r = await estimarCarbohidratos(dieta.ajustes.claveIA, descripcion, momento, dieta.piezas)
+    setEstimando(false)
+    if (r.ok) {
+      setEstimacion(r.estimacion)
+      setIdEstimacion((n) => n + 1)
+    } else setErrorEstimacion(r.error)
+  }
+
+  const agregarEstimada = (carbohidratos: number, guardar: boolean) => {
+    if (!estimacion) return
+    const ahora = new Date()
+    if (guardar) {
+      const nueva = piezaDesdeEstimacion(estimacion, carbohidratos, descripcion, momentoId, dieta.piezas, ahora, fechaISOLocal(ahora))
+      cambiarDieta((d) => agregarPieza(d, nueva))
+      setElegidas((lista) => [...lista, nueva])
+    } else {
+      setElegidas((lista) => [...lista, piezaTemporal(estimacion, carbohidratos, descripcion, momentoId, String(ahora.getTime()))])
+    }
+    setEstimacion(null)
+    setDescripcion('')
+  }
 
   const confirmar = () => {
     const entrada = entradaDesdePiezas(elegidas, momentoId, fechaISOLocal(new Date()), 'otra-comida')
@@ -131,15 +190,29 @@ export function OtraComida() {
             multilinea
             sugerencia="Qué y cuánto. Por ejemplo: 2 porciones de tarta de jamón y queso de la rotisería"
             valor={descripcion}
-            alCambiar={setDescripcion}
+            alCambiar={cambiarDescripcion}
           />
-          <div class="otra__estimar">
-            <Boton tipo="secundario" deshabilitado>
-              <Icono nombre="chispas" tamano={20} />
-              Estimar carbohidratos
-            </Boton>
-            <span class="meta texto-apagado">La estimación con IA llega en la fase 6.</span>
-          </div>
+          {estimacion ? (
+            <TarjetaEstimacion key={idEstimacion} estimacion={estimacion} alAgregar={agregarEstimada} />
+          ) : (
+            <div class="otra__estimar">
+              <Boton tipo="secundario" deshabilitado={!puedeEstimar} alTocar={estimar}>
+                <Icono nombre="chispas" tamano={20} />
+                {estimando ? 'Estimando…' : 'Estimar carbohidratos'}
+              </Boton>
+              {sinClave && (
+                <span class="meta texto-apagado">
+                  Para estimar hace falta la clave de la IA. <Enlace href="/ajustes">Cargala en Ajustes</Enlace>.
+                </span>
+              )}
+              {!sinClave && sinInternet && <span class="meta texto-apagado">Sin internet no se puede estimar. El resto funciona igual.</span>}
+              {errorEstimacion && (
+                <span class="body otra__error" role="alert">
+                  {errorEstimacion}
+                </span>
+              )}
+            </div>
+          )}
         </section>
       </div>
 

@@ -1,0 +1,39 @@
+.casilla {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--touch-min);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+/* La casilla real queda invisible pero accesible: el lector de pantalla y el teclado la usan. */
+.casilla__nativa {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.casilla__caja {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: 2px solid var(--ink-muted);
+  background: var(--surface-raised);
+  color: var(--on-accent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.casilla__caja--marcada {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.casilla__nativa:focus-visible + .casilla__caja {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
