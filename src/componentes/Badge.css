@@ -1,0 +1,33 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-sm);
+  border: 1.5px solid transparent;
+  white-space: nowrap;
+}
+
+.badge--fibra {
+  color: var(--fibra);
+  background: var(--fibra-soft);
+  border-color: var(--fibra);
+}
+
+.badge--grasa {
+  color: var(--grasa);
+  background: var(--grasa-soft);
+  border-color: var(--grasa);
+}
+
+.badge--neutro {
+  color: var(--ink-muted);
+  background: var(--surface-sunken);
+  border-color: var(--line);
+}
+
+.badge--ambar {
+  color: var(--state-over);
+  background: var(--state-over-soft);
+  border-color: var(--state-over);
+}

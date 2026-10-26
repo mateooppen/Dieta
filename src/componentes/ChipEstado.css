@@ -1,0 +1,29 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.chip--chico {
+  height: 26px;
+  padding: 0 var(--space-2);
+}
+
+.chip--ok {
+  color: var(--state-ok);
+  background: var(--state-ok-soft);
+}
+
+.chip--over {
+  color: var(--state-over);
+  background: var(--state-over-soft);
+}
+
+.chip--under {
+  color: var(--state-under);
+  background: var(--state-under-soft);
+}

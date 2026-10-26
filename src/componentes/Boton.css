@@ -1,0 +1,47 @@
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border-radius: var(--radius-md);
+  border: 1.5px solid transparent;
+  white-space: nowrap;
+}
+
+.boton--primario {
+  height: var(--touch-primary);
+  flex: 1;
+  min-width: 0;
+  padding: 0 var(--space-4);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.boton--primario.boton--hecho {
+  background: var(--state-ok-soft);
+  color: var(--state-ok);
+  border-color: var(--state-ok);
+}
+
+.boton--secundario {
+  height: var(--touch-min);
+  padding: 0 var(--space-4);
+  background: var(--surface-raised);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.boton--liviano {
+  height: 44px;
+  padding: 0 10px;
+  background: transparent;
+  color: var(--accent);
+}
+
+.boton:disabled {
+  cursor: default;
+}
+
+.boton--primario:disabled:not(.boton--hecho) {
+  opacity: 0.5;
+}

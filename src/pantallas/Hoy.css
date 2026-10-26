@@ -1,0 +1,74 @@
+.hoy {
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.hoy__contenido {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  padding: var(--space-4) var(--space-4) 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hoy__encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.hoy__titulos {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+}
+
+.hoy__titulo {
+  margin: 0;
+}
+
+.hoy__fecha {
+  color: var(--ink-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hoy__iconos {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.hoy__tip {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: 0 var(--space-1);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.hoy__tip-titulo {
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.hoy__tip-texto {
+  color: var(--ink-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.hoy__sin-opciones {
+  color: var(--ink-muted);
+}

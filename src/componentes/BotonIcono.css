@@ -1,0 +1,14 @@
+.boton-icono {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--line);
+  background: var(--surface-raised);
+  color: var(--ink-muted);
+  text-decoration: none;
+  cursor: pointer;
+}
