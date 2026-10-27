@@ -4,7 +4,7 @@ import type { Dieta } from '../logica/tipos.ts'
 
 /**
  * Almacén de la dieta en memoria con copia en localStorage (caché para abrir rápido y sin conexión).
- * Drive se suma en la fase 5: este módulo queda como la única puerta de lectura y escritura.
+ * La sincronización con Drive (sincronizacion.ts) lee y escribe a través de este módulo, que es la única puerta.
  */
 
 export const CLAVE_CACHE = 'dieta.json'

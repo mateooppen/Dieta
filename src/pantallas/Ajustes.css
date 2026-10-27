@@ -64,7 +64,10 @@
 }
 
 .ajustes__archivo {
-  position: absolute;
+  /* Fijo y fuera de la vista: así no estira la página. */
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 1px;
   height: 1px;
   opacity: 0;

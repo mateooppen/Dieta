@@ -1,4 +1,5 @@
 .casilla {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -10,6 +11,8 @@
 /* La casilla real queda invisible pero accesible: el lector de pantalla y el teclado la usan. */
 .casilla__nativa {
   position: absolute;
+  top: 0;
+  left: 0;
   opacity: 0;
   width: 1px;
   height: 1px;
