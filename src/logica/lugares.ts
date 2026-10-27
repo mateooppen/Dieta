@@ -115,6 +115,11 @@ export function lugarRequerido(plato: Plato, rol: Rol): boolean {
   return rol === 'segundo' && paraComer !== null && usoDe(paraComer) === 'con-lacteo'
 }
 
+/** Si el plato tiene todo lo obligatorio elegido (incluido lo que pasa a ser obligatorio, como el yogur o la leche de la avena). */
+export function platoCompleto(plato: Plato): boolean {
+  return plato.lugares.every((l) => l.pieza !== null || !lugarRequerido(plato, l.rol))
+}
+
 /** Lo que se agrega a la bebida (la leche), solo si la bebida es café, té o mate cocido. */
 export function encajaEnBebida(bebida: Pieza | null, p: Pieza): boolean {
   return admiteLeche(bebida) && esDesayuno(p) && p.uso === 'en-bebida'

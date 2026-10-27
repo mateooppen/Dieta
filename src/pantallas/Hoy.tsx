@@ -16,7 +16,7 @@ import { TarjetaAlternativa } from '../componentes/TarjetaAlternativa.tsx'
 import { alternativasParaLugar } from '../logica/alternativas.ts'
 import { fechaISOLocal, fechaLarga } from '../logica/fecha.ts'
 import { entradaDesdePlato } from '../logica/historial.ts'
-import { conPieza, lugarRequerido, piezaDelRol, platoVacio, textoVacio, tituloCambiar } from '../logica/lugares.ts'
+import { conPieza, lugarRequerido, piezaDelRol, platoCompleto, platoVacio, textoVacio, tituloCambiar } from '../logica/lugares.ts'
 import { paraTenerAMano, textoCarbohidratos } from '../logica/marcas.ts'
 import { momentoPorHora } from '../logica/momentos.ts'
 import { proponerPlato } from '../logica/propuesta.ts'
@@ -75,10 +75,15 @@ export function Hoy() {
   }
 
   // Al cambiar de momento se muestra el plato de hoy para ese momento (o se propone uno si no había).
+  // También cuando cambian las piezas (por ejemplo, al llegar lo de Drive): el plato se rearma con las
+  // piezas actuales, así nunca se muestra ni se guarda un valor viejo.
   useEffect(() => {
     setPlato(platoParaMomento(momentoId))
     setGuardado(false)
-  }, [momentoId])
+  }, [momentoId, dieta.piezas])
+
+  // Algo obligatorio sin elegir (la avena sin su yogur o leche): no se puede confirmar todavía.
+  const completo = platoCompleto(plato)
 
   const elegirPieza = (rol: Rol, pieza: Plato['lugares'][number]['pieza']) => {
     const nuevo = conPieza(plato, rol, pieza)
@@ -150,7 +155,7 @@ export function Hoy() {
         <Enlace href={`/otra?momento=${momentoId}`} class="boton boton--secundario body-strong">
           Otra comida
         </Enlace>
-        <Boton tipo="primario" hecho={guardado} deshabilitado={guardado} alTocar={confirmar}>
+        <Boton tipo="primario" hecho={guardado} deshabilitado={guardado || !completo} alTocar={confirmar}>
           {guardado ? 'Guardado' : 'Voy a comer esto'}
         </Boton>
       </BarraAcciones>

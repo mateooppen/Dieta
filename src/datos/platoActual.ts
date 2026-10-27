@@ -1,4 +1,4 @@
-import { lugarRequerido, lugaresVacios, piezasValidasParaLugar } from '../logica/lugares.ts'
+import { lugaresVacios, piezasValidasParaLugar } from '../logica/lugares.ts'
 import { momentoPorId } from './piezas.ts'
 import type { MomentoId, Pieza, Plato, Rol } from '../logica/tipos.ts'
 import type { Deposito } from './almacen.ts'
@@ -53,7 +53,6 @@ export function cargarPlatoActual(deposito: Deposito | null, momento: MomentoId,
   const m = momentoPorId(momento)
   for (const l of lugares) {
     if (l.pieza && !piezasValidasParaLugar([l.pieza], l.rol, m, plato).length) return null
-    if (!l.pieza && lugarRequerido(plato, l.rol)) return null
   }
   return plato
 }

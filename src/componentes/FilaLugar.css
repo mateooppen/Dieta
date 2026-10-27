@@ -48,3 +48,8 @@
   display: inline-flex;
   color: var(--ink-muted);
 }
+
+.fila-lugar__falta {
+  color: var(--state-over);
+  font-weight: 700;
+}

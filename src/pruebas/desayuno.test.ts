@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { PIEZAS_BASE, USO_BASE, momentoPorId } from '../datos/piezas.ts'
 import { alternativasParaLugar } from '../logica/alternativas.ts'
 import { importarDieta } from '../logica/dieta.ts'
-import { admiteLeche, conPieza, lugarRequerido, lugarVisible, piezaDelRol, piezasValidasParaLugar, platoVacio, textoVacio } from '../logica/lugares.ts'
+import { admiteLeche, conPieza, lugarRequerido, lugarVisible, platoCompleto, piezaDelRol, piezasValidasParaLugar, platoVacio, textoVacio } from '../logica/lugares.ts'
 import { proponerPlato } from '../logica/propuesta.ts'
 import type { Pieza } from '../logica/tipos.ts'
 import { azarFijo } from './ayuda.ts'
@@ -108,5 +108,20 @@ describe('propuestas de desayuno y merienda', () => {
         if (leche) expect(admiteLeche(piezaDelRol(plato, 'bebida'))).toBe(true)
       }
     }
+  })
+})
+
+describe('plato completo', () => {
+  it('con avena sin yogur ni leche no está completo; al elegir uno, sí', () => {
+    let plato = conPieza(platoVacio('desayuno'), 'bebida', p('te'))
+    plato = conPieza(plato, 'solido', p('avena-arrollada'))
+    expect(platoCompleto(plato)).toBe(false)
+    plato = conPieza(plato, 'segundo', p('yogur-natural-o-sin-azucar'))
+    expect(platoCompleto(plato)).toBe(true)
+  })
+  it('los lugares opcionales vacíos no lo dejan incompleto', () => {
+    let plato = conPieza(platoVacio('desayuno'), 'bebida', p('te'))
+    plato = conPieza(plato, 'solido', p('medialuna'))
+    expect(platoCompleto(plato)).toBe(true)
   })
 })
