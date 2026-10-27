@@ -1,5 +1,5 @@
 import { distanciaAlRango, estadoDelTotal, totalDelPlato } from './calculo.ts'
-import { conPieza, lugaresVacios, piezasValidasParaLugar, rolPrincipal } from './lugares.ts'
+import { conPieza, lugarRequerido, lugaresVacios, piezasValidasParaLugar, rolPrincipal } from './lugares.ts'
 import type { EntradaHistorial, Estado, Momento, MomentoId, Pieza, Plato } from './tipos.ts'
 
 /** Función que devuelve un número al azar en [0, 1). Se inyecta para que las pruebas sean repetibles. */
@@ -29,9 +29,8 @@ export function idsRecientes(historial: EntradaHistorial[], momento: MomentoId, 
 function armarIntento(piezas: Pieza[], momento: Momento, evitar: Set<string>, azar: Azar): Plato | null {
   let plato: Plato = { momento: momento.id, lugares: lugaresVacios(momento.id) }
   const principalRol = rolPrincipal(momento.id)
-  let principal: Pieza | null = null
   for (const lugar of plato.lugares) {
-    let candidatas = piezasValidasParaLugar(piezas, lugar.rol, momento, principal)
+    let candidatas = piezasValidasParaLugar(piezas, lugar.rol, momento, plato)
     if (lugar.rol === principalRol) {
       const sinRecientes = candidatas.filter((p) => !evitar.has(p.id))
       if (sinRecientes.length > 0) candidatas = sinRecientes
@@ -39,14 +38,14 @@ function armarIntento(piezas: Pieza[], momento: Momento, evitar: Set<string>, az
     // No repetir una pieza ya puesta en otro lugar del mismo plato.
     const usadas = new Set(plato.lugares.filter((l) => l.pieza).map((l) => l.pieza!.id))
     candidatas = candidatas.filter((p) => !usadas.has(p.id))
+    const requerido = lugarRequerido(plato, lugar.rol)
     if (candidatas.length === 0) {
-      if (lugar.obligatorio) return null
+      if (requerido) return null
       continue
     }
-    if (!lugar.obligatorio && azar() < PROB_VACIO) continue
+    if (!requerido && azar() < PROB_VACIO) continue
     const elegida = elegir(candidatas, azar)
     plato = conPieza(plato, lugar.rol, elegida)
-    if (lugar.rol === 'principal') principal = elegida
   }
   return plato
 }

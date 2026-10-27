@@ -1,10 +1,11 @@
-import { PIEZAS_BASE } from '../datos/piezas.ts'
-import type { Ajustes, Dieta, EntradaHistorial, MomentoId, Pieza, TipoPieza } from './tipos.ts'
+import { PIEZAS_BASE, usoPorDefecto } from '../datos/piezas.ts'
+import type { Ajustes, Dieta, EntradaHistorial, MomentoId, Pieza, TipoPieza, UsoPieza } from './tipos.ts'
 
 export const VERSION_DIETA = 1
 
 const MOMENTOS_VALIDOS: MomentoId[] = ['desayuno', 'almuerzo', 'merienda', 'cena', 'colacion']
 const TIPOS_VALIDOS: TipoPieza[] = ['principal', 'acompanamiento', 'desayuno_merienda', 'fruta', 'bebida', 'extra']
+export const USOS_VALIDOS: UsoPieza[] = ['base', 'sola', 'encima', 'lacteo', 'con-lacteo', 'en-bebida']
 
 export const AJUSTES_INICIALES: Ajustes = { tema: 'sistema', claveIA: '' }
 
@@ -56,6 +57,8 @@ function validarPieza(x: unknown, indice: number): Pieza | string {
     momentos: x.momentos as MomentoId[],
     mealPrep: x.mealPrep === true,
     traeCarbohidratos: x.traeCarbohidratos === true,
+    // Las piezas guardadas antes de que existiera la clase la toman de la tabla base (o "se come sola").
+    uso: USOS_VALIDOS.includes(x.uso as UsoPieza) ? (x.uso as UsoPieza) : usoPorDefecto(x.id),
     altaFibra: x.altaFibra === true,
     altaGrasa: x.altaGrasa === true,
     nota: typeof x.nota === 'string' ? x.nota : '',

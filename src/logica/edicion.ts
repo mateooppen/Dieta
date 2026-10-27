@@ -1,5 +1,5 @@
 import { normalizar } from './busqueda.ts'
-import type { Dieta, MomentoId, Pieza, TipoPieza } from './tipos.ts'
+import type { Dieta, MomentoId, Pieza, TipoPieza, UsoPieza } from './tipos.ts'
 
 /** Lo que se edita en la hoja de una pieza: todo menos id, origen y fecha de creación. */
 export type Borrador = Omit<Pieza, 'id' | 'origen' | 'creadaEl'>
@@ -13,6 +13,7 @@ export function borradorVacio(): Borrador {
     momentos: [],
     mealPrep: false,
     traeCarbohidratos: false,
+    uso: 'sola',
     altaFibra: false,
     altaGrasa: false,
     nota: '',
@@ -83,6 +84,16 @@ export function eliminarPieza(dieta: Dieta, id: string): Dieta {
 
 export function alternarMomento(momentos: MomentoId[], m: MomentoId): MomentoId[] {
   return momentos.includes(m) ? momentos.filter((x) => x !== m) : [...momentos, m]
+}
+
+/** Nombres de las clases de desayuno/merienda, para elegirlas al editar una pieza. */
+export const NOMBRE_USO: Record<UsoPieza, string> = {
+  base: 'Base (pan, galletitas)',
+  sola: 'Se come sola',
+  encima: 'Va encima de una base',
+  lacteo: 'Yogur o similar',
+  'con-lacteo': 'Va con yogur o leche',
+  'en-bebida': 'Va en la bebida',
 }
 
 export const NOMBRE_TIPO: Record<TipoPieza, string> = {

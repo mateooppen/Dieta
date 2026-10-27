@@ -1,4 +1,5 @@
-import { lugaresVacios } from '../logica/lugares.ts'
+import { lugarRequerido, lugaresVacios, piezasValidasParaLugar } from '../logica/lugares.ts'
+import { momentoPorId } from './piezas.ts'
 import type { MomentoId, Pieza, Plato, Rol } from '../logica/tipos.ts'
 import type { Deposito } from './almacen.ts'
 
@@ -47,7 +48,14 @@ export function cargarPlatoActual(deposito: Deposito | null, momento: MomentoId,
   })
   // Si una pieza obligatoria ya no existe, el plato guardado no sirve.
   if (lugares.some((l) => l.obligatorio && !l.pieza)) return null
-  return { momento, lugares }
+  // Si alguna pieza ya no encaja en su lugar (por ejemplo, un plato armado con reglas anteriores), tampoco.
+  const plato: Plato = { momento, lugares }
+  const m = momentoPorId(momento)
+  for (const l of lugares) {
+    if (l.pieza && !piezasValidasParaLugar([l.pieza], l.rol, m, plato).length) return null
+    if (!l.pieza && lugarRequerido(plato, l.rol)) return null
+  }
+  return plato
 }
 
 /** Guarda el plato mostrado para ese momento; si el día cambió, descarta los de ayer. */

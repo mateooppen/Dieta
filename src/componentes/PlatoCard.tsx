@@ -1,5 +1,6 @@
 import './PlatoCard.css'
 import { estadoDelTotal, totalDelPlato } from '../logica/calculo.ts'
+import { lugarVisible } from '../logica/lugares.ts'
 import type { Momento, Plato, Rol } from '../logica/tipos.ts'
 import { Boton } from './Boton.tsx'
 import { ChipEstado } from './ChipEstado.tsx'
@@ -34,7 +35,7 @@ export function PlatoCard({ plato, momento, alTocarLugar, alProponerOtro }: Prop
         </span>
       </div>
       <div class="plato-card__filas">
-        {plato.lugares.map((l) => (
+        {plato.lugares.filter((l) => lugarVisible(plato, l)).map((l) => (
           <FilaLugar key={l.rol} lugar={l} alTocar={() => alTocarLugar(l.rol)} />
         ))}
       </div>

@@ -1,7 +1,8 @@
 import './HojaEdicionPieza.css'
 import { useState } from 'preact/hooks'
 import { MOMENTOS, TIPOS } from '../datos/piezas.ts'
-import { NOMBRE_TIPO, alternarMomento, borradorDesdePieza, borradorVacio, validarBorrador, type Borrador } from '../logica/edicion.ts'
+import { USOS_VALIDOS } from '../logica/dieta.ts'
+import { NOMBRE_TIPO, NOMBRE_USO, alternarMomento, borradorDesdePieza, borradorVacio, validarBorrador, type Borrador } from '../logica/edicion.ts'
 import type { MomentoId, Pieza } from '../logica/tipos.ts'
 import { Badge } from './Badge.tsx'
 import { Boton } from './Boton.tsx'
@@ -77,6 +78,17 @@ export function HojaEdicionPieza({ pieza, abierta, alCerrar, alGuardar, alElimin
             ))}
           </div>
         </div>
+
+        {b.tipo === 'desayuno_merienda' && (
+          <div class="edicion__grupo">
+            <span class="label edicion__etiqueta">Cómo se come</span>
+            <div class="chips-grupo">
+              {USOS_VALIDOS.map((u) => (
+                <ChipOpcion key={u} texto={NOMBRE_USO[u]} activo={b.uso === u} alTocar={() => cambiar({ uso: u })} />
+              ))}
+            </div>
+          </div>
+        )}
 
         <div class="edicion__grupo">
           <span class="label edicion__etiqueta">Momentos en que va</span>

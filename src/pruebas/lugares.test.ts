@@ -15,9 +15,10 @@ describe('lugares del plato por momento', () => {
     }
   })
 
-  it('desayuno y merienda: bebida y una pieza obligatorias, segunda opcional', () => {
+  it('desayuno y merienda: bebida y algo para comer obligatorios; leche y acompañamiento opcionales', () => {
     expect(lugaresVacios('desayuno').map((l) => [l.rol, l.obligatorio])).toEqual([
       ['bebida', true],
+      ['conBebida', false],
       ['solido', true],
       ['segundo', false],
     ])
@@ -53,11 +54,11 @@ describe('piezas válidas para un lugar', () => {
   })
 
   it('acompañamiento: acompañamientos con más de 10 g', () => {
-    expect(piezasValidasParaLugar(todas, 'acompanamiento', ALMUERZO, principal)).toEqual([arroz, zapallo])
+    expect(piezasValidasParaLugar(todas, 'acompanamiento', ALMUERZO, conPieza(platoVacio('almuerzo'), 'principal', principal))).toEqual([arroz, zapallo])
   })
 
   it('acompañamiento vacío si el principal trae carbohidratos', () => {
-    expect(piezasValidasParaLugar(todas, 'acompanamiento', ALMUERZO, conCarbos)).toEqual([])
+    expect(piezasValidasParaLugar(todas, 'acompanamiento', ALMUERZO, conPieza(platoVacio('almuerzo'), 'principal', conCarbos))).toEqual([])
   })
 
   it('verdura: acompañamientos de 10 g o menos', () => {
@@ -72,7 +73,9 @@ describe('piezas válidas para un lugar', () => {
     const desayuno = momentoPorId('desayuno')
     expect(piezasValidasParaLugar(todas, 'bebida', desayuno)).toEqual([agua])
     expect(piezasValidasParaLugar(todas, 'solido', desayuno)).toEqual([manzana, tostada])
-    expect(piezasValidasParaLugar(todas, 'segundo', desayuno)).toEqual([manzana, tostada])
+    // Con una fruta para comer, se acompaña con algo que se come solo; sin nada para comer, no hay acompañamiento.
+    expect(piezasValidasParaLugar(todas, 'segundo', desayuno, conPieza(platoVacio('desayuno'), 'solido', manzana))).toEqual([tostada])
+    expect(piezasValidasParaLugar(todas, 'segundo', desayuno)).toEqual([])
   })
 
   it('colación: fruta, desayuno/merienda o extra dentro del rango 10-15', () => {

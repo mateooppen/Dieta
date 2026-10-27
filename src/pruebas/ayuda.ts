@@ -24,6 +24,7 @@ export function pieza(parcial: Partial<Pieza> & Pick<Pieza, 'tipo' | 'carbohidra
     momentos: ['desayuno', 'almuerzo', 'merienda', 'cena', 'colacion'],
     mealPrep: false,
     traeCarbohidratos: false,
+    uso: 'sola',
     altaFibra: false,
     altaGrasa: false,
     nota: '',

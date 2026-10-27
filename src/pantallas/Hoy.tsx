@@ -16,7 +16,7 @@ import { TarjetaAlternativa } from '../componentes/TarjetaAlternativa.tsx'
 import { alternativasParaLugar } from '../logica/alternativas.ts'
 import { fechaISOLocal, fechaLarga } from '../logica/fecha.ts'
 import { entradaDesdePlato } from '../logica/historial.ts'
-import { NOMBRE_ROL, conPieza, piezaDelRol, platoVacio } from '../logica/lugares.ts'
+import { conPieza, lugarRequerido, piezaDelRol, platoVacio, textoVacio, tituloCambiar } from '../logica/lugares.ts'
 import { paraTenerAMano, textoCarbohidratos } from '../logica/marcas.ts'
 import { momentoPorHora } from '../logica/momentos.ts'
 import { proponerPlato } from '../logica/propuesta.ts'
@@ -81,8 +81,11 @@ export function Hoy() {
   }, [momentoId])
 
   const elegirPieza = (rol: Rol, pieza: Plato['lugares'][number]['pieza']) => {
-    mostrar(conPieza(plato, rol, pieza))
-    setRolAbierto(null)
+    const nuevo = conPieza(plato, rol, pieza)
+    mostrar(nuevo)
+    // Si lo elegido necesita compañía (la avena, con yogur o leche), se pide enseguida.
+    const falta = nuevo.lugares.find((l) => !l.pieza && lugarRequerido(nuevo, l.rol))
+    setRolAbierto(falta ? falta.rol : null)
   }
 
   const confirmar = () => {
@@ -101,7 +104,12 @@ export function Hoy() {
   )
 
   const piezaAbierta = rolAbierto ? piezaDelRol(plato, rolAbierto) : null
-  const nombreRolAbierto = rolAbierto ? NOMBRE_ROL[rolAbierto].toLowerCase() : ''
+  const vacioRequerido = rolAbierto !== null && !piezaAbierta && lugarRequerido(plato, rolAbierto)
+  const subtituloHoja = piezaAbierta
+    ? `Ahora: ${piezaAbierta.nombre} (${textoCarbohidratos(piezaAbierta.carbohidratos)}). El total se recalcula con cada opción.`
+    : vacioRequerido
+      ? `${piezaDelRol(plato, 'solido')?.nombre ?? 'Lo que elegiste'} va con yogur o leche. Elegí uno. El total se recalcula con cada opción.`
+      : `Ahora: ${rolAbierto ? textoVacio(rolAbierto).toLowerCase() : ''}. El total se recalcula con cada opción.`
   const oscuro = temaEfectivo(dieta.ajustes.tema, sistemaOscuro()) === 'oscuro'
 
   return (
@@ -149,12 +157,8 @@ export function Hoy() {
 
       <HojaInferior
         abierta={rolAbierto !== null}
-        titulo={`Cambiar ${nombreRolAbierto}`}
-        subtitulo={
-          piezaAbierta
-            ? `Ahora: ${piezaAbierta.nombre} (${textoCarbohidratos(piezaAbierta.carbohidratos)}). El total se recalcula con cada opción.`
-            : `Ahora sin ${nombreRolAbierto}. El total se recalcula con cada opción.`
-        }
+        titulo={rolAbierto ? tituloCambiar(rolAbierto) : ''}
+        subtitulo={subtituloHoja}
         alCerrar={() => setRolAbierto(null)}
       >
         {alternativas.length === 0 && <span class="body hoy__sin-opciones">No hay otras opciones para este lugar.</span>}

@@ -14,6 +14,12 @@ export interface Momento {
   descripcion: string
 }
 
+/**
+ * Cómo se come una pieza de desayuno/merienda; decide con qué se puede combinar.
+ * En las piezas de otros tipos no se usa y vale 'sola'.
+ */
+export type UsoPieza = 'base' | 'sola' | 'encima' | 'lacteo' | 'con-lacteo' | 'en-bebida'
+
 export interface Pieza {
   id: string
   nombre: string
@@ -23,6 +29,7 @@ export interface Pieza {
   momentos: MomentoId[]
   mealPrep: boolean
   traeCarbohidratos: boolean
+  uso: UsoPieza
   altaFibra: boolean
   altaGrasa: boolean
   nota: string
@@ -41,6 +48,7 @@ export type Rol =
   | 'verdura'
   | 'postre'
   | 'bebida'
+  | 'conBebida'
   | 'solido'
   | 'segundo'
   | 'colacion'
