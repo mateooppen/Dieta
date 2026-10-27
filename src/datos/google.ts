@@ -42,6 +42,20 @@ export function guardarToken(token: string, duracionSegundos: number): TokenGuar
   return guardado
 }
 
+/**
+ * Google rechazó el token: se marca vencido en lugar de borrarlo, así la app recuerda que hay una cuenta
+ * (y que los cambios de este teléfono tienen que subirse cuando se vuelva a entrar).
+ */
+export function marcarTokenVencido(): void {
+  const guardado = leerTokenGuardado()
+  if (!guardado) return
+  try {
+    localStorage.setItem(CLAVE_TOKEN, JSON.stringify({ ...guardado, vence: 0 }))
+  } catch {
+    // Nada que hacer.
+  }
+}
+
 export function borrarToken(): void {
   try {
     localStorage.removeItem(CLAVE_TOKEN)

@@ -3,7 +3,7 @@ import { agregarPiezasNuevas, importarDieta } from '../logica/dieta.ts'
 import type { Dieta } from '../logica/tipos.ts'
 import { almacen, type Almacen } from './almacen.ts'
 import { ErrorDrive, actualizarArchivo, buscarArchivo, crearArchivo, leerArchivo } from './drive.ts'
-import { borrarToken, cerrarSesionGoogle, leerTokenGuardado, pedirToken, tokenVigente } from './google.ts'
+import { cerrarSesionGoogle, leerTokenGuardado, marcarTokenVencido, pedirToken, tokenVigente } from './google.ts'
 
 /**
  * Mantiene dieta.json de Drive igual a lo que hay en el teléfono.
@@ -81,20 +81,33 @@ export class Sincronizador {
   private escribiendo = false
   /** Mientras se aplica lo leído de Drive, los cambios del almacén no se vuelven a subir. */
   private aplicandoRemoto = false
-  /** Si ya se habló con Drive desde que se abrió la app. */
+  /**
+   * Si ya se leyó Drive (o se decidió subir lo del teléfono) desde que se abrió la app.
+   * Hasta entonces no se escribe en Drive por cuenta propia, para no pisar algo que no se leyó.
+   */
   private conectado = false
+  /** Cuenta los cambios hechos en el teléfono, para saber si hubo alguno mientras se leía Drive. */
+  private cambiosLocales = 0
   private almacen: Almacen
 
   constructor(almacen: Almacen) {
     this.almacen = almacen
     almacen.suscribir(() => {
-      if (!this.aplicandoRemoto) this.programarEscritura()
+      if (this.aplicandoRemoto) return
+      this.cambiosLocales++
+      this.programarEscritura()
     })
     if (typeof addEventListener !== 'undefined') {
       addEventListener('online', () => {
         // Si la app abrió sin internet, recién ahora se habla con Drive.
         if (!this.conectado) void this.iniciar()
         else if (this.pendiente) this.programarEscritura()
+      })
+      // La app instalada queda abierta horas: al volver a mirarla se reintenta lo que haya quedado pendiente.
+      addEventListener('visibilitychange', () => {
+        if (document.visibilityState !== 'visible') return
+        if (!this.conectado) void this.iniciar()
+        else if (this.pendiente) void this.escribir()
       })
     }
   }
@@ -141,17 +154,25 @@ export class Sincronizador {
         return
       }
     }
-    this.conectado = true
-    if (haySinSubir()) await this.escribir(token!)
+    if (haySinSubir()) await this.subirDecidido(token!)
     else await this.leerDeDrive(token!)
   }
 
-  /** Desde un toque del usuario: pide permiso a Google y lee Drive. Devuelve el problema, o null si salió bien. */
+  /** Lo del teléfono es lo más nuevo: se sube y desde ahí la app queda conectada. */
+  private async subirDecidido(token: string): Promise<void> {
+    this.conectado = true
+    await this.escribir(token)
+  }
+
+  /**
+   * Desde un toque del usuario: pide permiso a Google y lee Drive. Devuelve el problema, o null si salió bien.
+   * Si la sesión había vencido y quedaron cambios del teléfono sin subir, se suben en vez de leer.
+   */
   async entrar(): Promise<string | null> {
     try {
       const t = await pedirToken(false)
-      this.conectado = true
-      await this.leerDeDrive(t.token)
+      if (haySinSubir()) await this.subirDecidido(t.token)
+      else await this.leerDeDrive(t.token)
       return null
     } catch (e) {
       return e instanceof Error ? e.message : 'No se pudo entrar con Google.'
@@ -178,11 +199,18 @@ export class Sincronizador {
 
   private async leerDeDrive(token: string): Promise<void> {
     this.fijar('sincronizando', 'Leyendo Drive…')
+    const cambiosAntes = this.cambiosLocales
     try {
       this.idArchivo = await buscarArchivo(token)
       if (this.idArchivo) {
         const remota = dietaAlAbrir(await leerArchivo(token, this.idArchivo))
+        // Si mientras se leía se cambió algo en el teléfono, eso es lo más nuevo: no se pisa.
+        if (this.cambiosLocales !== cambiosAntes) {
+          await this.subirDecidido(token)
+          return
+        }
         if (remota) {
+          this.conectado = true
           this.aplicandoRemoto = true
           try {
             this.almacen.actualizar(() => remota)
@@ -195,9 +223,11 @@ export class Sincronizador {
         }
       }
       // Drive no tiene nada (o está roto): lo que hay en el teléfono pasa a ser la verdad.
-      await this.escribir(token)
+      await this.subirDecidido(token)
     } catch (e) {
-      this.manejarError(e)
+      // No se pudo leer: se vuelve a intentar la lectura (nunca se sube sin haber leído).
+      this.conectado = false
+      this.manejarError(e, () => void this.iniciar())
     }
   }
 
@@ -214,10 +244,20 @@ export class Sincronizador {
       this.pendiente = true
       return
     }
-    const token = tokenDado ?? this.token()
+    // Sin haber leído Drive no se escribe: queda marcado y se resuelve al conectar.
+    if (!tokenDado && !this.conectado) return
+    let token = tokenDado ?? this.token()
     if (!token) {
-      if (leerTokenGuardado()) this.fijar('sesion-vencida')
-      return
+      if (!leerTokenGuardado()) return
+      // Ya se intentó y hace falta que el usuario entre de nuevo (el punto ámbar lo avisa): no se insiste.
+      if (this.situacion.estado === 'sesion-vencida') return
+      // El token venció con la app abierta: se intenta renovar sin molestar.
+      try {
+        token = (await pedirToken(true)).token
+      } catch {
+        this.fijar(typeof navigator !== 'undefined' && navigator.onLine === false ? 'sin-conexion' : 'sesion-vencida')
+        return
+      }
     }
     if (typeof navigator !== 'undefined' && navigator.onLine === false) {
       this.fijar('sin-conexion')
@@ -243,16 +283,17 @@ export class Sincronizador {
       this.situacion = { ...this.situacion, ultimoGuardado: new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }) }
       this.fijar('al-dia')
     } catch (e) {
-      this.manejarError(e)
+      this.manejarError(e, () => void this.escribir())
     } finally {
       this.escribiendo = false
       if (this.pendiente) this.programarEscritura()
     }
   }
 
-  private manejarError(e: unknown): void {
+  /** `reintentar` se llama una vez, 30 s después, si el problema es pasajero (Drive saturado o caído). */
+  private manejarError(e: unknown, reintentar: () => void): void {
     if (e instanceof ErrorDrive && e.sesionVencida) {
-      borrarToken()
+      marcarTokenVencido()
       this.fijar('sesion-vencida')
       return
     }
@@ -263,8 +304,9 @@ export class Sincronizador {
     }
     const mensaje = e instanceof Error ? e.message : String(e)
     if (e instanceof ErrorDrive && e.temporal) {
-      this.pendiente = true
-      this.temporizador = setTimeout(() => void this.escribir(), 30_000)
+      // Sin marcar `pendiente`: si no, se reprogramaría a los 2 s y se le insistiría a Drive.
+      if (this.temporizador) clearTimeout(this.temporizador)
+      this.temporizador = setTimeout(reintentar, 30_000)
     }
     this.fijar('error', `${TEXTO_ESTADO_SYNC.error} ${mensaje}`)
   }
