@@ -23,6 +23,37 @@ export interface SituacionSync {
 
 export const RETARDO_ESCRITURA_MS = 2000
 
+/** Marca en el teléfono: hay cambios hechos acá (por ejemplo sin internet) que todavía no llegaron a Drive. */
+export const CLAVE_SIN_SUBIR = 'dieta.sin-subir'
+
+function marcarSinSubir(valor: boolean): void {
+  try {
+    if (valor) localStorage.setItem(CLAVE_SIN_SUBIR, '1')
+    else localStorage.removeItem(CLAVE_SIN_SUBIR)
+  } catch {
+    // Sin almacenamiento: queda solo en memoria.
+  }
+}
+
+function haySinSubir(): boolean {
+  try {
+    return localStorage.getItem(CLAVE_SIN_SUBIR) === '1'
+  } catch {
+    return false
+  }
+}
+
+/**
+ * Qué hacer con Drive al abrir la app (o al volver internet). Función pura para poder probarla.
+ * Los cambios del teléfono que no llegaron a subirse son lo más nuevo: se suben en vez de leer Drive.
+ */
+export function accionAlAbrir(e: { haySesion: boolean; tokenVigente: boolean; enLinea: boolean; cambiosSinSubir: boolean }): 'nada' | 'sin-conexion' | 'renovar' | 'leer' | 'subir' {
+  if (!e.haySesion) return 'nada'
+  if (!e.enLinea) return 'sin-conexion'
+  if (!e.tokenVigente) return 'renovar'
+  return e.cambiosSinSubir ? 'subir' : 'leer'
+}
+
 /** Qué queda en el teléfono al abrir: lo de Drive, más las piezas base nuevas de esta versión. Null si Drive no tiene nada usable. */
 export function dietaAlAbrir(textoDrive: string | null): Dieta | null {
   if (!textoDrive) return null
@@ -50,6 +81,8 @@ export class Sincronizador {
   private escribiendo = false
   /** Mientras se aplica lo leído de Drive, los cambios del almacén no se vuelven a subir. */
   private aplicandoRemoto = false
+  /** Si ya se habló con Drive desde que se abrió la app. */
+  private conectado = false
   private almacen: Almacen
 
   constructor(almacen: Almacen) {
@@ -59,7 +92,9 @@ export class Sincronizador {
     })
     if (typeof addEventListener !== 'undefined') {
       addEventListener('online', () => {
-        if (this.pendiente) this.programarEscritura()
+        // Si la app abrió sin internet, recién ahora se habla con Drive.
+        if (!this.conectado) void this.iniciar()
+        else if (this.pendiente) this.programarEscritura()
       })
     }
   }
@@ -84,25 +119,38 @@ export class Sincronizador {
 
   /** Al abrir la app: si hay sesión, lee Drive y lo deja como verdad. Nunca lanza. */
   async iniciar(): Promise<void> {
-    const guardado = leerTokenGuardado()
-    if (!guardado) return
     let token = this.token()
-    if (!token) {
+    const accion = accionAlAbrir({
+      haySesion: leerTokenGuardado() !== null,
+      tokenVigente: token !== null,
+      enLinea: typeof navigator === 'undefined' || navigator.onLine !== false,
+      cambiosSinSubir: haySinSubir(),
+    })
+    if (accion === 'nada') return
+    if (accion === 'sin-conexion') {
+      this.pendiente = haySinSubir()
+      this.fijar('sin-conexion')
+      return
+    }
+    if (accion === 'renovar') {
       // El token venció: intento renovarlo sin molestar.
       try {
         token = (await pedirToken(true)).token
       } catch {
-        this.fijar('sesion-vencida')
+        this.fijar(typeof navigator !== 'undefined' && navigator.onLine === false ? 'sin-conexion' : 'sesion-vencida')
         return
       }
     }
-    await this.leerDeDrive(token)
+    this.conectado = true
+    if (haySinSubir()) await this.escribir(token!)
+    else await this.leerDeDrive(token!)
   }
 
   /** Desde un toque del usuario: pide permiso a Google y lee Drive. Devuelve el problema, o null si salió bien. */
   async entrar(): Promise<string | null> {
     try {
       const t = await pedirToken(false)
+      this.conectado = true
       await this.leerDeDrive(t.token)
       return null
     } catch (e) {
@@ -115,6 +163,8 @@ export class Sincronizador {
     this.temporizador = null
     this.pendiente = false
     this.idArchivo = null
+    this.conectado = false
+    marcarSinSubir(false)
     await cerrarSesionGoogle()
     this.fijar('sin-sesion')
   }
@@ -154,6 +204,7 @@ export class Sincronizador {
   private programarEscritura(): void {
     this.pendiente = true
     if (!leerTokenGuardado()) return
+    marcarSinSubir(true)
     if (this.temporizador) clearTimeout(this.temporizador)
     this.temporizador = setTimeout(() => void this.escribir(), RETARDO_ESCRITURA_MS)
   }
@@ -188,6 +239,7 @@ export class Sincronizador {
         this.idArchivo = (await buscarArchivo(token)) ?? (await crearArchivo(token, contenido))
         if (this.idArchivo) await actualizarArchivo(token, this.idArchivo, contenido)
       }
+      if (!this.pendiente) marcarSinSubir(false)
       this.situacion = { ...this.situacion, ultimoGuardado: new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }) }
       this.fijar('al-dia')
     } catch (e) {

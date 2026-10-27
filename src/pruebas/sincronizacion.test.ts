@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { mensajeErrorGoogle, tokenVigente } from '../datos/google.ts'
-import { dietaAlAbrir } from '../datos/sincronizacion.ts'
+import { accionAlAbrir, dietaAlAbrir } from '../datos/sincronizacion.ts'
 import { crearDietaInicial } from '../logica/dieta.ts'
 import { fusionarAjustesAlImportar, nombreDeRespaldo, textoDeRespaldo } from '../logica/respaldo.ts'
 
@@ -61,5 +61,22 @@ describe('mensajeErrorGoogle', () => {
   it('no deja el mensaje vacío ante un problema desconocido', () => {
     expect(mensajeErrorGoogle('raro')).toContain('raro')
     expect(mensajeErrorGoogle(undefined)).toBe('No se pudo entrar con Google.')
+  })
+})
+
+describe('qué hacer con Drive al abrir', () => {
+  const base = { haySesion: true, tokenVigente: true, enLinea: true, cambiosSinSubir: false }
+  it('sin sesión no hace nada', () => {
+    expect(accionAlAbrir({ ...base, haySesion: false })).toBe('nada')
+  })
+  it('sin internet avisa "sin conexión", aunque el token haya vencido', () => {
+    expect(accionAlAbrir({ ...base, enLinea: false, tokenVigente: false })).toBe('sin-conexion')
+  })
+  it('con el token vencido, lo renueva', () => {
+    expect(accionAlAbrir({ ...base, tokenVigente: false })).toBe('renovar')
+  })
+  it('lee Drive, salvo que haya cambios del teléfono sin subir: esos son lo más nuevo y se suben', () => {
+    expect(accionAlAbrir(base)).toBe('leer')
+    expect(accionAlAbrir({ ...base, cambiosSinSubir: true })).toBe('subir')
   })
 })
